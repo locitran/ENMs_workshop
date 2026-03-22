@@ -9,7 +9,7 @@ Outline of workshop plan
 - What does a spring actually do?
 - What is the mean-square fluctuation of a two-particle system in a harmonic potential at temperature T?
 ## Part 2
-
+- Fetching PDB website by py-rcsb-search-api
 
 Week 2-3: Theory
 - GNM

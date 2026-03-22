@@ -55,3 +55,5 @@ Using ENMs, we get something called normal modes. These are the natural ways the
 
 <h2 style="color:#c55a11; border-bottom:2px solid #f4b183; padding-bottom:4px;">What does a spring actually do?</h2>
 ...
+
+https://quantummechanics.ucsd.edu/ph130a/130_notes/node87.html
