@@ -1,6 +1,6 @@
 # ENMs Workshop
 
-This workshop includes the Week 1 lesson on `py-rcsb-api`.
+This workshop includes the Week 1 lesson on `ENMs` and `py-rcsb-api`.
 
 ## Files
 
@@ -12,7 +12,6 @@ This workshop includes the Week 1 lesson on `py-rcsb-api`.
 ## Getting Started
 
 ### 1. Log in to A100
-
 ```bash
 ssh -l <your_login_name> 140.114.97.192
 ```
@@ -20,12 +19,15 @@ ssh -l <your_login_name> 140.114.97.192
 Use your assigned login name and password.
 
 ### 2. Download the workshop from GitHub
-
 Go to the directory where you want to place the repository, then run:
 ```bash
 git clone https://github.com/locitran/ENMs_workshop.git
 cd ENMs_workshop
 ```
+
+### 3. Run Jupiter notebook in A100
+Refer to this hackMD https://hackmd.io/Y9HZatmrSnqtHcC7X6tc-Q
+
 
 ## Setup With Conda
 Please use conda for this workshop.
@@ -55,5 +57,4 @@ This test should import `rcsbapi` and run a small example. It needs internet acc
 ```bash
 python check_setup.py
 ```
-
 
