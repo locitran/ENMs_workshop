@@ -1,0 +1,6 @@
+# Week 1 workshop environment for py-rcsb-search-api
+# Recommended Python: 3.10 or 3.11
+
+rcsbsearchapi==2.0.1
+pandas==2.2.3
+notebook==7.3.2
