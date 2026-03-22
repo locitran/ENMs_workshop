@@ -1,8 +1,6 @@
-<h1 style="color:#1f4e79; background:#eaf2f8; padding:12px 16px; border-left:6px solid #5b9bd5; border-radius:8px;">Week 1: Introduction to py-rcsb-api</h1>
+# Week 1: Introduction to py-rcsb-api
 
-<p>
-  <span style="background:#fff2cc; color:#7f6000; padding:2px 8px; border-radius:999px;"><strong>Topics</strong></span>
-</p>
+<p><span style="background:#fff2cc; color:#7f6000; padding:2px 8px; border-radius:999px;"><strong>Topics</strong></span></p>
 
 - What `py-rcsb-api` is
 - Installation and imports
@@ -12,92 +10,68 @@
 - Hands-on exercises
 - Resources
 
-<h2 style="color:#c55a11; border-bottom:2px solid #f4b183; padding-bottom:4px;">What is `py-rcsb-api`?</h2>
+## What is `py-rcsb-api`?
 
 [`py-rcsb-api`](https://github.com/rcsb/py-rcsb-api) is the current Python toolkit for accessing RCSB PDB API services.
 According to the official documentation, it provides Python interfaces for:
 
 - the Search API
 - the Data API
-- the Sequence Coordinates API
-- the Model Server API
+- the Sequence Coordinates API (not included in this workshop)
+- the Model Server API (not included in this workshop)
 
-For beginners, the two most useful parts to start with are:
+For more information, visit:
+- [Official `rcsb-api` documentation](https://rcsbapi.readthedocs.io/)
+- [GitHub repository: `py-rcsb-api`](https://github.com/rcsb/py-rcsb-api)
 
-- `rcsbapi.search` for finding entries
-- `rcsbapi.data` for retrieving structured metadata
+## Part 1: Search API
 
-<h2 style="color:#c55a11; border-bottom:2px solid #f4b183; padding-bottom:4px;">Installation</h2>
-
-The official GitHub README says `rcsb-api` requires Python 3.9 or later.
-
-### Install with pip
-
-```bash
-pip install rcsb-api
-```
-
-### Import the Search API
-
-```python
-from rcsbapi.search import TextQuery, AttributeQuery
-from rcsbapi.search import search_attributes as attrs
-```
-
-### Import the Data API
-
-```python
-from rcsbapi.data import DataQuery
-```
-
-<h2 style="color:#c55a11; border-bottom:2px solid #f4b183; padding-bottom:4px;">Part 1: Search API</h2>
-
-The Search API is used to find PDB entries that match search conditions.
+The **Search API** is used to find PDB entries that match search conditions.
 This is the easiest place to start.
 
-<h3>Text search</h3>
+### Text search
 
 A `TextQuery` works like a keyword search.
 
 ```python
 from rcsbapi.search import TextQuery
-
 query = TextQuery(value="Hemoglobin")
 results = list(query())
-
 print(f"Found {len(results)} entries")
 print(results[:10])
 ```
 
-<h3>Attribute search</h3>
+![alt text](<../images/week 1 - Text search.png>)
+
+### Attribute search
 
 An `AttributeQuery` searches a specific field.
 
 ```python
 from rcsbapi.search import AttributeQuery
-
 query = AttributeQuery(
     attribute="rcsb_entity_source_organism.scientific_name",
     operator="exact_match",
     value="Homo sapiens"
 )
 results = list(query())
-
+print(f"Found {len(results)} entries")
 print(results[:10])
 ```
+
+![alt text](<../images/week 1 - Attribute search.png>)
 
 You can also use the shorter attribute syntax from `search_attributes`.
 
 ```python
 from rcsbapi.search import search_attributes as attrs
-
 query = attrs.rcsb_entity_source_organism.scientific_name == "Homo sapiens"
 results = list(query())
-
+print(f"Found {len(results)} entries")
 print(results[:10])
 ```
 
-<h3>Combining queries</h3>
+### Combining queries
 
 Queries can be combined with Python bitwise operators:
 
@@ -118,7 +92,9 @@ results = list(query())
 print(results[:10])
 ```
 
-<h3>Another search example</h3>
+![alt text](<../images/week 1 - Combining queries.png>)
+
+### Another search example
 
 ```python
 q_method = attrs.exptl.method == "X-RAY DIFFRACTION"
@@ -130,12 +106,37 @@ results = list(query())
 print(results[:10])
 ```
 
-<h2 style="color:#c55a11; border-bottom:2px solid #f4b183; padding-bottom:4px;">Part 2: Data API</h2>
+### Useful references
+- [Search API quickstart](https://rcsbapi.readthedocs.io/en/latest/search_api/quickstart.html)
+- [Search API Attributes](https://search.rcsb.org/structure-search-attributes.html)
+- [Search API docs](https://search.rcsb.org/)
 
-The Data API is used to retrieve structured information for specific entries.
-According to the official documentation, this module builds GraphQL queries for you.
+## Part 2: Data API
 
-A simple example is to fetch the experimental method for entry `4HHB`.
+The **Data API** is used to retrieve structured information for specific IDs such as PDB entries.
+If the Search API answers the question "which structures match my conditions?", the Data API answers the question "what details do these structures have?"
+
+The official `py-rcsb-api` documentation explains that the Data API uses **GraphQL** under the hood.
+In practice, this means:
+
+- you start from an input object such as `entries`
+- you provide one or more IDs, such as `4HHB`
+- you request the exact fields you want back, such as `exptl.method` or `struct.title`
+
+`DataQuery` helps us build this GraphQL request in Python, so we do not have to write the GraphQL query by hand.
+
+### Basic pattern
+
+A Data API query usually has three main parts:
+
+1. `input_type`
+   This says what kind of object you are querying, for example `entries`.
+2. `input_ids`
+   This is the list of IDs you want to look up.
+3. `return_data_list`
+   This is the list of fields you want to retrieve.
+
+### Example 1: get the experimental method for one structure
 
 ```python
 from rcsbapi.data import DataQuery
@@ -150,20 +151,47 @@ result = query.exec()
 print(result)
 ```
 
-This is useful after a search step.
-For example, you can:
+This asks for entry `4HHB` and returns the value stored under `exptl.method`.
 
-1. use `rcsbapi.search` to find PDB IDs
-2. use `rcsbapi.data` to retrieve metadata for those IDs
+### Example output
+A simplified example of the returned result may look like this:
+```python
+{
+    'data': {
+        'entries': [
+            {
+                'exptl': [
+                    {'method': 'X-RAY DIFFRACTION'}
+                ]
+            }
+        ]
+    }
+}
+```
+You usually need to inspect the result step by step to find the field you want.
 
-<h3>Another Data API example</h3>
-
+### Example 2: retrieve more than one field
 ```python
 from rcsbapi.data import DataQuery
 
 query = DataQuery(
     input_type="entries",
     input_ids=["4HHB"],
+    return_data_list=["rcsb_id", "struct.title", "exptl.method"]
+)
+
+result = query.exec()
+print(result)
+```
+
+### Example 3: request data for multiple entries
+This is useful when you already have a short list of PDB IDs from a search result.
+```python
+from rcsbapi.data import DataQuery
+
+query = DataQuery(
+    input_type="entries",
+    input_ids=["4HHB", "1CRN"],
     return_data_list=["rcsb_id", "struct.title"]
 )
 
@@ -171,48 +199,80 @@ result = query.exec()
 print(result)
 ```
 
-<h2 style="color:#c55a11; border-bottom:2px solid #f4b183; padding-bottom:4px;">A simple learning workflow</h2>
+### How the Data API relates to GraphQL
 
-A good way to learn `py-rcsb-api` is:
+The RCSB Data API itself is based on **GraphQL**.
+GraphQL organizes data into:
 
-1. Start with a `TextQuery`.
-2. Try one attribute query.
-3. Combine two search queries.
-4. Save one or two PDB IDs from the search results.
-5. Use `DataQuery` to fetch metadata for those IDs.
+- **types**: structured objects such as an entry
+- **fields**: properties under those objects
+- **scalars**: final values such as strings, numbers, or booleans
 
-<h2 style="color:#c55a11; border-bottom:2px solid #f4b183; padding-bottom:4px;">Hands-on exercises</h2>
+The `py-rcsb-api` package reads the schema and helps generate GraphQL automatically.
+So instead of writing raw GraphQL like this:
+
+```graphql
+{
+  entries(entry_ids: ["4HHB"]) {
+    exptl {
+      method
+    }
+  }
+}
+```
+
+we can write the equivalent Python query:
+```python
+from rcsbapi.data import DataQuery
+query = DataQuery(
+    input_type="entries",
+    input_ids=["4HHB"],
+    return_data_list=["exptl.method"]
+)
+```
+
+This is one of the main benefits of `DataQuery`.
+It gives us a simpler Python interface, while still using the GraphQL Data API underneath.
+
+### Useful references
+- [Data API quickstart](https://rcsbapi.readthedocs.io/en/latest/data_api/quickstart.html)
+- [Data API Attributes](https://data.rcsb.org/data-attributes.html)
+- [Data API docs](https://data.rcsb.org/)
+
+## Hands-on exercises
 
 ### Exercise 1
-
-Use `TextQuery` to search for `myosin` and print the first 10 PDB IDs.
+Use `TextQuery` to search for `insulin` and print the first 10 PDB IDs.
 
 ### Exercise 2
-
-Use `search_attributes` to find entries from `Homo sapiens`.
+Use `search_attributes` to find entries from `Mus musculus` and print the first 10 PDB IDs.
 
 ### Exercise 3
-
-Find entries determined by `ELECTRON MICROSCOPY` with resolution better than `3.5` A.
+Find entries determined by `X-RAY DIFFRACTION` with resolution better than `2.0` A.
 
 ### Exercise 4
-
-Search for `p53`, then combine that query with a human organism filter.
+Search for `kinase`, then combine that query with a human organism filter.
+Print the first 10 matching PDB IDs.
 
 ### Exercise 5
-
-Use `DataQuery` to retrieve `exptl.method` and `struct.title` for entry `4HHB`.
-
-<h2 style="color:#c55a11; border-bottom:2px solid #f4b183; padding-bottom:4px;">Resources</h2>
-
-- [Official `rcsb-api` documentation](https://rcsbapi.readthedocs.io/)
-- [GitHub repository: `py-rcsb-api`](https://github.com/rcsb/py-rcsb-api)
-- [RCSB Search API docs](https://search.rcsb.org/)
-- [RCSB Data API docs](https://data.rcsb.org/)
-- [Search quickstart notebook](https://github.com/rcsb/py-rcsb-api/blob/master/notebooks/search_quickstart.ipynb)
-- [Data quickstart notebook](https://github.com/rcsb/py-rcsb-api/blob/master/notebooks/data_quickstart.ipynb)
-
-<h2 style="color:#c55a11; border-bottom:2px solid #f4b183; padding-bottom:4px;">Take-home message</h2>
-
-`py-rcsb-api` is the current official Python package for accessing RCSB PDB API services.
-A practical beginner workflow is to use `rcsbapi.search` to find entries and `rcsbapi.data` to retrieve detailed information about them.
+Use 10 PDB IDs from `Exercise 4` to find 
+- (1) number of biological assembly structures (bas),
+- (2) number of chains in each structure,
+- (3) corresponding UniProt ID.
+- (4) Finally, please arrange the results in a dictionary as follow:
+```python
+resulting_dictionary = {
+    'pdbID 1': {
+        'bas_1': {
+            'chain A': 'Uniprot ID 1',
+            'chain B': 'Uniprot ID 2',
+            ...
+        },
+        'bas_2': {...
+        }
+    },
+    'pdbID 2': {...
+    },
+    ...
+}
+```

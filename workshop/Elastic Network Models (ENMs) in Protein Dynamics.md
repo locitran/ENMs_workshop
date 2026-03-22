@@ -9,9 +9,13 @@ Outline of workshop plan
 - What does a spring actually do?
 - What is the mean-square fluctuation of a two-particle system in a harmonic potential at temperature T?
 ## Part 2
-- Fetching PDB website by py-rcsb-search-api
+Fetching information from PDB website by py-rcsb-api
+- Search API
+- Data API
 
-Week 2-3: Theory
+# Week 2-3: Theory
+## Part 1
+- Recap 5 minutes
 - GNM
 	- Network representation (Gaussian fluctuations, Kirchhoff matrix $\Gamma$)
 	- Variance-Covariance matrix, 
@@ -20,21 +24,32 @@ Week 2-3: Theory
 - GNM databases
 2005 - L-W Yang et al., *i*GNM: a database of protein functional motions based on Gaussian Network Model
 2016 - H. Li et al., *i*GNM 2.0: the Gaussian network model database for biomolecular structural dynamics
+## Part 2
+- Recap 5 minutes
+- Check exercises, 15 minutes
+- Fetching information from UniProt website
 
-==Week 4: Practice using GNM==
+# Week 4: Practice using GNM
+## Part 1
 - DynOmics website (https://dyn.life.nthu.edu.tw/oENM/index.php)
 - Matlab code for GNM (https://github.com/Yuan-Yu/bioStructureM)
 - ProDy (http://www.bahargroup.org/prody/)
 - Practice
 1. Extract B factors from your PDB structure
 2. Compare these B factors with those obtained from diagonal element $\Gamma^{-1}$ matrix
-==Week 5: Theory==
+## Part 2
+
+# Week 5: Theory
+## Part 1
 - ANM
-==Week 6: Theory==
+## Part 2
+
+# Week 6: Theory
+## Part 1
 - Perturbation Response Scanning (PRS)
 	- Effectivity and Sensitivity 
 	- 
-
+## Part 2
 
 # Reference
 Professor Yang's slides: 
@@ -48,3 +63,8 @@ https://www.youtube.com/watch?v=8DBAlYsvlbI&t=2523s
 https://www.youtube.com/watch?v=3z6pE_CBwxg&t=113s
 2022 - ProDy: Protein Dynamics using Elastic Network Models
 https://www.youtube.com/watch?v=8JwRC4Dcj_M
+
+Potential topics:
+- PDB parser 
+- Structure superimposition
+- Deep Neural Network (DNN) models

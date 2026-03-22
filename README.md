@@ -1,78 +1,59 @@
 # ENMs Workshop
 
-This workshop includes the Week 1 lesson on `py-rcsb-search-api`.
+This workshop includes the Week 1 lesson on `py-rcsb-api`.
 
 ## Files
 
-- `Week1-py-rcsb-search-api.md`: workshop notes
-- `Week1-ENMs-Introduction.md`: ENM introduction notes
+- `workshop/Week1-py-rcsb-api.md`: workshop notes for `py-rcsb-api`
+- `workshop/Week1-ENMs-Introduction.md`: ENM introduction notes
 - `requirements.txt`: Python packages for this workshop
 - `check_setup.py`: simple setup test
 
-## Setup
+## Getting Started
+
+### 1. Log in to A100
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-pip install -r requirements.txt
+ssh -l <your_login_name> 140.114.97.192
 ```
 
-## Test
+Use your assigned login name and password.
 
-```bash
-python check_setup.py
-```
+### 2. Download the workshop from GitHub
 
-This test imports `rcsbsearchapi` and runs a small search example.
-It needs internet access.
-
-## Git For Students
-
-### Clone the repo
-
+Go to the directory where you want to place the repository, then run:
 ```bash
 git clone https://github.com/locitran/ENMs_workshop.git
 cd ENMs_workshop
 ```
 
-### Get the latest changes
+## Setup With Conda
+Please use conda for this workshop.
 
+If you do not have Miniconda yet, follow the Miniconda section in this HackMD first:
+https://hackmd.io/JTdM-ho2Siqx3F01vDdkow?view#Miniconda
+
+Then create and activate an environment:
 ```bash
-git pull origin main
+conda create --name <your_env_name> python=<python_version>
+conda activate <your_env_name>
 ```
 
-### Check changed files
-
+Example:
 ```bash
-git status
+conda create --name enm_workshop python=3.11
+conda activate enm_workshop
 ```
 
-### Save your own work
-
+After that, install the package requirements:
 ```bash
-git add .
-git commit -m "Update workshop files"
-git push origin main
+pip install -r requirements.txt
 ```
 
-## How to publish this repo
-
-This folder is already a git repository.
-It is currently on `main` and has no commits yet.
-
-To create the first commit and connect it to GitHub:
-
+## Test
+This test should import `rcsbapi` and run a small example. It needs internet access.
 ```bash
-cd /mnt/nas_1/YangLab/project/ENMs_workshop
-git add .
-git commit -m "Initial commit"
-git remote add origin https://github.com/locitran/ENMs_workshop.git
-git push -u origin main
+python check_setup.py
 ```
 
-## Notes
 
-- Recommended Python: 3.10 or 3.11
-- `rcsbsearchapi` is deprecated, but it is still fine for this workshop
-- For newer projects, consider `rcsb-api`
