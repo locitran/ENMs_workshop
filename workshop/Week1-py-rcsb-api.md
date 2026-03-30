@@ -276,3 +276,290 @@ resulting_dictionary = {
     ...
 }
 ```
+
+### One possible solution
+
+In this exercise, we combine the **Search API** and the **Data API**.
+Instead of writing everything at once, it is easier to break the problem into smaller steps.
+
+#### Step 1: use `TextQuery` and `search_attributes` to get 10 PDB IDs
+
+```python
+from rcsbapi.search import TextQuery
+from rcsbapi.search import search_attributes as attrs
+
+q1 = TextQuery(value="kinase")
+q2 = attrs.rcsb_entity_source_organism.scientific_name == "Homo sapiens"
+query = q1 & q2
+
+pdb_ids = list(query())[:10]
+print(pdb_ids)
+```
+
+This gives us 10 PDB IDs from `Exercise 4`.
+
+#### Step 2: use `DataQuery(input_type="entries")` to get assembly IDs and polymer entity IDs
+
+For one PDB ID, we can ask the Data API for:
+- `assembly_ids`
+- `polymer_entity_ids`
+
+```python
+from rcsbapi.data import DataQuery
+
+pdb_id = pdb_ids[0]
+
+entry_query = DataQuery(
+    input_type="entries",
+    input_ids=[pdb_id],
+    return_data_list=[
+        "rcsb_entry_container_identifiers.assembly_ids",
+        "rcsb_entry_container_identifiers.polymer_entity_ids",
+    ],
+)
+
+entry_result = entry_query.exec()
+print(entry_result)
+```
+
+You can then extract the two lists like this:
+
+```python
+entry_data = entry_result["data"]["entries"][0]
+assembly_ids = entry_data["rcsb_entry_container_identifiers"].get("assembly_ids", [])
+polymer_entity_ids = entry_data["rcsb_entry_container_identifiers"].get("polymer_entity_ids", [])
+
+print("assembly_ids:", assembly_ids)
+print("polymer_entity_ids:", polymer_entity_ids)
+```
+
+#### Step 3: use `DataQuery(input_type="assemblies")` to get the chain IDs in each biological assembly
+
+For one biological assembly, the input ID format is `PDBID-assembly_id`.
+For example:
+
+```python
+assembly_query = DataQuery(
+    input_type="assemblies",
+    input_ids=[f"{pdb_id}-{assembly_ids[0]}"],
+    return_data_list=[
+        "rcsb_assembly_container_identifiers.assembly_id",
+        "pdbx_struct_assembly_gen.asym_id_list",
+    ],
+)
+
+assembly_result = assembly_query.exec()
+print(assembly_result)
+```
+
+To collect the chain IDs:
+
+```python
+assembly_data = assembly_result["data"]["assemblies"][0]
+assembly_gen = assembly_data.get("pdbx_struct_assembly_gen", [])
+
+asym_ids_in_assembly = []
+for item in assembly_gen:
+    asym_ids_in_assembly.extend(item.get("asym_id_list", []))
+
+print(asym_ids_in_assembly)
+```
+
+#### Step 4: use `DataQuery(input_type="polymer_entities")` to map each chain to its UniProt ID
+
+For one polymer entity, the input ID format is `PDBID_entity_id`.
+For example:
+
+```python
+polymer_entity_query = DataQuery(
+    input_type="polymer_entities",
+    input_ids=[f"{pdb_id}_{polymer_entity_ids[0]}"],
+    return_data_list=[
+        "rcsb_polymer_entity_container_identifiers.asym_ids",
+        "rcsb_polymer_entity_container_identifiers.uniprot_ids",
+    ],
+)
+
+polymer_entity_result = polymer_entity_query.exec()
+print(polymer_entity_result)
+```
+
+To build a chain-to-UniProt mapping:
+
+```python
+polymer_entity_data = polymer_entity_result["data"]["polymer_entities"][0]
+container = polymer_entity_data["rcsb_polymer_entity_container_identifiers"]
+
+asym_ids = container.get("asym_ids", [])
+uniprot_ids = container.get("uniprot_ids", [])
+
+if len(uniprot_ids) == 0:
+    uniprot_value = None
+elif len(uniprot_ids) == 1:
+    uniprot_value = uniprot_ids[0]
+else:
+    uniprot_value = uniprot_ids
+
+chain_to_uniprot = {}
+for asym_id in asym_ids:
+    chain_to_uniprot[asym_id] = uniprot_value
+
+print(chain_to_uniprot)
+```
+
+#### Step 5: arrange the result as a nested Python dictionary
+
+The final target looks like this:
+
+```python
+resulting_dictionary = {
+    "PDBID": {
+        "bas_1": {
+            "chain A": "UniProt ID",
+            "chain B": "UniProt ID",
+        }
+    }
+}
+```
+
+To help with repeated chain IDs, we use a small helper function:
+
+```python
+def unique_keep_order(items):
+    seen = set()
+    out = []
+    for x in items:
+        if x not in seen:
+            seen.add(x)
+            out.append(x)
+    return out
+```
+
+#### Final combined solution
+
+```python
+from rcsbapi.search import TextQuery
+from rcsbapi.search import search_attributes as attrs
+from rcsbapi.data import DataQuery
+
+
+def unique_keep_order(items):
+    seen = set()
+    out = []
+    for x in items:
+        if x not in seen:
+            seen.add(x)
+            out.append(x)
+    return out
+
+
+# Step 1: repeat Exercise 4
+q1 = TextQuery(value="kinase")
+q2 = attrs.rcsb_entity_source_organism.scientific_name == "Homo sapiens"
+query = q1 & q2
+
+pdb_ids = list(query())[:10]
+print("10 PDB IDs:")
+print(pdb_ids)
+
+
+# Step 2: build the final dictionary
+resulting_dictionary = {}
+
+for pdb_id in pdb_ids:
+    pdb_id = pdb_id.upper()
+
+    # Get assembly IDs and polymer entity IDs for this entry
+    entry_query = DataQuery(
+        input_type="entries",
+        input_ids=[pdb_id],
+        return_data_list=[
+            "rcsb_entry_container_identifiers.assembly_ids",
+            "rcsb_entry_container_identifiers.polymer_entity_ids",
+        ],
+    )
+    entry_result = entry_query.exec()
+    entry_data = entry_result["data"]["entries"][0]
+
+    assembly_ids = entry_data["rcsb_entry_container_identifiers"].get("assembly_ids", [])
+    polymer_entity_ids = entry_data["rcsb_entry_container_identifiers"].get("polymer_entity_ids", [])
+
+    # Build chain -> UniProt mapping
+    chain_to_uniprot = {}
+
+    for entity_id in polymer_entity_ids:
+        polymer_entity_query = DataQuery(
+            input_type="polymer_entities",
+            input_ids=[f"{pdb_id}_{entity_id}"],
+            return_data_list=[
+                "rcsb_polymer_entity_container_identifiers.asym_ids",
+                "rcsb_polymer_entity_container_identifiers.uniprot_ids",
+            ],
+        )
+        polymer_entity_result = polymer_entity_query.exec()
+        polymer_entity_data = polymer_entity_result["data"]["polymer_entities"][0]
+
+        container = polymer_entity_data["rcsb_polymer_entity_container_identifiers"]
+        asym_ids = container.get("asym_ids", [])
+        uniprot_ids = container.get("uniprot_ids", [])
+
+        if len(uniprot_ids) == 0:
+            uniprot_value = None
+        elif len(uniprot_ids) == 1:
+            uniprot_value = uniprot_ids[0]
+        else:
+            uniprot_value = uniprot_ids
+
+        for asym_id in asym_ids:
+            chain_to_uniprot[asym_id] = uniprot_value
+
+    # Build bas -> chain -> UniProt
+    resulting_dictionary[pdb_id] = {}
+
+    for assembly_id in assembly_ids:
+        assembly_query = DataQuery(
+            input_type="assemblies",
+            input_ids=[f"{pdb_id}-{assembly_id}"],
+            return_data_list=[
+                "rcsb_assembly_container_identifiers.assembly_id",
+                "pdbx_struct_assembly_gen.asym_id_list",
+            ],
+        )
+        assembly_result = assembly_query.exec()
+        assembly_data = assembly_result["data"]["assemblies"][0]
+
+        assembly_gen = assembly_data.get("pdbx_struct_assembly_gen", [])
+
+        asym_ids_in_assembly = []
+        for item in assembly_gen:
+            asym_ids_in_assembly.extend(item.get("asym_id_list", []))
+
+        asym_ids_in_assembly = unique_keep_order(asym_ids_in_assembly)
+
+        bas_key = f"bas_{assembly_id}"
+        resulting_dictionary[pdb_id][bas_key] = {}
+
+        for asym_id in asym_ids_in_assembly:
+            if asym_id in chain_to_uniprot:
+                resulting_dictionary[pdb_id][bas_key][f"chain {asym_id}"] = chain_to_uniprot[asym_id]
+
+print(resulting_dictionary)
+```
+
+### Optional summary
+
+If you also want to print the number of biological assemblies and the number of chains in each assembly:
+
+```python
+for pdb_id, bas_dict in resulting_dictionary.items():
+    print(f"\n{pdb_id}")
+    print(f"Number of biological assemblies: {len(bas_dict)}")
+    for bas_name, chain_dict in bas_dict.items():
+        print(f"  {bas_name}: {len(chain_dict)} chains")
+```
+
+### Notes
+
+- For `assemblies`, the input ID format is `PDBID-assembly_id`, for example `4HHB-1`.
+- For `polymer_entities`, the input ID format is `PDBID_entity_id`, for example `4HHB_1`.
+- Some chains may not have a UniProt mapping, so the value may be `None`.
