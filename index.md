@@ -9,17 +9,9 @@ description: ENMs workshop homepage with links to lessons and setup material.
 Welcome to the workshop website for **Elastic Network Models (ENMs)**. This site turns the repository notes into a cleaner teaching format so students can browse the material directly in the browser.
 
 <div class="hero-grid">
-  <a class="hero-card" href="{{ '/docs/' | relative_url }}">
-    <strong>Docs Guide</strong>
-    <span>See the multi-week outline, references, and planned topics.</span>
-  </a>
-  <a class="hero-card" href="{{ '/docs/outline/' | relative_url }}">
-    <strong>Workshop Outline</strong>
-    <span>The broader multi-week roadmap with theory, practice, and references.</span>
-  </a>
   <a class="hero-card" href="{{ '/docs/week1-enms/' | relative_url }}">
-    <strong>Week 1: Introduction to ENMs</strong>
-    <span>Concepts, intuition, and the physical basis of ENMs.</span>
+    <strong>Week 1: Introduction</strong>
+    <span>Concepts, intuition, and the physical basis of elastic network models.</span>
   </a>
   <a class="hero-card" href="{{ '/docs/week1-py-rcsb-api/' | relative_url }}">
     <strong>Week 1: py-rcsb-api</strong>
@@ -29,7 +21,19 @@ Welcome to the workshop website for **Elastic Network Models (ENMs)**. This site
     <strong>Bonus Notes</strong>
     <span>Optional theory notes on harmonic potentials and oscillators.</span>
   </a>
+  <a class="hero-card" href="{{ '/docs/outline/' | relative_url }}">
+    <strong>Workshop Outline</strong>
+    <span>The broader multi-week roadmap with theory, practice, and references.</span>
+  </a>
 </div>
+
+## Site Tree
+
+- [Home]({{ '/' | relative_url }})
+- [Week 1: Introduction]({{ '/docs/week1-enms/' | relative_url }})
+- [Week 1: py-rcsb-api]({{ '/docs/week1-py-rcsb-api/' | relative_url }})
+- [Bonus Notes]({{ '/docs/week1-bonus/' | relative_url }})
+- [Workshop Outline]({{ '/docs/outline/' | relative_url }})
 
 ## What this site includes
 

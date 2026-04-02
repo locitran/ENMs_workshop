@@ -32,11 +32,10 @@
 
         <nav class="site-nav" aria-label="Primary">
           <a href="{{ '/' | relative_url }}" {% if page.url == '/' %}aria-current="page"{% endif %}>Home</a>
-          <a href="{{ '/docs/' | relative_url }}" {% if page.url == '/docs/' %}aria-current="page"{% endif %}>Docs Guide</a>
-          <a href="{{ '/docs/outline/' | relative_url }}" {% if page.url == '/docs/outline/' %}aria-current="page"{% endif %}>Workshop Outline</a>
-          <a href="{{ '/docs/week1-enms/' | relative_url }}" {% if page.url == '/docs/week1-enms/' %}aria-current="page"{% endif %}>Week 1: ENMs</a>
+          <a href="{{ '/docs/week1-enms/' | relative_url }}" {% if page.url == '/docs/week1-enms/' %}aria-current="page"{% endif %}>Week 1: Introduction</a>
           <a href="{{ '/docs/week1-py-rcsb-api/' | relative_url }}" {% if page.url == '/docs/week1-py-rcsb-api/' %}aria-current="page"{% endif %}>Week 1: py-rcsb-api</a>
           <a href="{{ '/docs/week1-bonus/' | relative_url }}" {% if page.url == '/docs/week1-bonus/' %}aria-current="page"{% endif %}>Bonus Notes</a>
+          <a href="{{ '/docs/outline/' | relative_url }}" {% if page.url == '/docs/outline/' %}aria-current="page"{% endif %}>Workshop Outline</a>
         </nav>
 
         <div class="sidebar-note">

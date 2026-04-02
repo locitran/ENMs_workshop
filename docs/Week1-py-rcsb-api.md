@@ -50,7 +50,7 @@ print(f"Found {len(results)} entries")
 print(results[:10])
 ```
 
-![alt text](<../images/week 1 - Text search.png>)
+![alt text]({{ '/images/week 1 - Text search.png' | relative_url }})
 
 ### Attribute search
 
@@ -68,7 +68,7 @@ print(f"Found {len(results)} entries")
 print(results[:10])
 ```
 
-![alt text](<../images/week 1 - Attribute search.png>)
+![alt text]({{ '/images/week 1 - Attribute search.png' | relative_url }})
 
 You can also use the shorter attribute syntax from `search_attributes`.
 
@@ -101,7 +101,7 @@ results = list(query())
 print(results[:10])
 ```
 
-![alt text](<../images/week 1 - Combining queries.png>)
+![alt text]({{ '/images/week 1 - Combining queries.png' | relative_url }})
 
 ### Another search example
 

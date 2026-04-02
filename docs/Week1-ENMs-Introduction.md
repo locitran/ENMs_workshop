@@ -46,11 +46,11 @@ ref: dynomics.pitt.edu
 
 <h2 style="color:#c55a11; border-bottom:2px solid #f4b183; padding-bottom:4px;">Each structure encodes a unique dynamics?</h2>
 
-![alt text](<../images/Each structure encodes a unique dynamics.png>)
+![alt text]({{ '/images/Each structure encodes a unique dynamics.png' | relative_url }})
 
 <h2 style="color:#c55a11; border-bottom:2px solid #f4b183; padding-bottom:4px;">What do ENMs do?</h2>
 
-![alt text](<../images/What do ENMs do.png>)
+![alt text]({{ '/images/What do ENMs do.png' | relative_url }})
 
 Protein is not static — it moves in order to function.
 For example, HIV-1 protease has flap regions that open and close to allow substrate binding. 
