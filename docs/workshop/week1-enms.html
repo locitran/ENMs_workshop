@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Week 1: ENMs | ENMs Workshop</title>
+    <meta name="description" content="Week 1 introduction to elastic network models.">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['\\[', '\\]']]
+        },
+        svg: {
+          fontCache: 'global'
+        }
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  </head>
+  <body>
+    <div class="site-shell">
+      <aside class="site-sidebar">
+        <a class="brand" href="../index.html">
+          <span class="brand-mark">ENM</span>
+          <span class="brand-copy">
+            <strong>ENMs Workshop</strong>
+            <span>Static GitHub Pages site</span>
+          </span>
+        </a>
+
+        <nav class="site-nav" aria-label="Primary">
+          <a href="../index.html">Home</a>
+          <a href="index.html">Workshop Guide</a>
+          <a href="week1-enms.html" aria-current="page">Week 1: ENMs</a>
+          <a href="week1-py-rcsb-api.html">Week 1: py-rcsb-api</a>
+          <a href="week1-bonus.html">Bonus Notes</a>
+        </nav>
+      </aside>
+
+      <main class="site-main">
+        <header class="page-header">
+          <p class="page-kicker">Lesson 1</p>
+          <h1>Week 1: Introduction to ENMs</h1>
+          <p class="page-lead">Core concepts behind elastic network models, including collective motion, structural fluctuations, and spring-based intuition.</p>
+        </header>
+
+        <article class="page-content">
+          <h2>Topics</h2>
+          <ul>
+            <li>Two widely known ENMs with numerous applications</li>
+            <li>What do ENMs study?</li>
+            <li>Each structure encodes a unique dynamics</li>
+            <li>What do ENMs do?</li>
+            <li>What does a spring actually do?</li>
+            <li>How fluctuations connect to stiffness and temperature</li>
+          </ul>
+
+          <h2>Two widely known ENMs with numerous applications</h2>
+          <p>Elastic Network Models are coarse-grained models used to study structural dynamics and conformational transitions of proteins and large biomolecules.</p>
+          <ul>
+            <li><strong>Gaussian Network Model (GNM)</strong>: focuses on fluctuation magnitudes and residue couplings.</li>
+            <li><strong>Anisotropic Network Model (ANM)</strong>: extends this to directional motions in three dimensions.</li>
+          </ul>
+
+          <h2>What do ENMs study?</h2>
+          <ul>
+            <li>Collective, low-frequency motions that involve the whole structure.</li>
+            <li>Fluctuations of residues, domains, and larger structural elements.</li>
+            <li>Functional sites such as mechanical residues and allosteric communication paths.</li>
+            <li>Potential effects of pathogenic protein variants.</li>
+          </ul>
+
+          <h2>Each structure encodes a unique dynamics</h2>
+          <p><img src="../images/Each%20structure%20encodes%20a%20unique%20dynamics.png" alt="Each structure encodes a unique dynamics"></p>
+
+          <h2>What do ENMs do?</h2>
+          <p><img src="../images/What%20do%20ENMs%20do.png" alt="What do ENMs do"></p>
+          <p>Proteins are not static. ENMs estimate the natural modes a protein prefers to adopt, which helps explain large-scale functional motions such as opening, closing, and breathing movements.</p>
+
+          <h2>What does a spring actually do?</h2>
+          <p>For a two-particle system with harmonic potential:</p>
+          <div class="math-block">\[U(x)=\frac{1}{2}kx^2\]</div>
+          <p>At temperature <code>T</code>, the mean-square fluctuation becomes:</p>
+          <div class="math-block">\[\langle x^2 \rangle = \frac{k_B T}{k}\]</div>
+          <p>This gives the key physical interpretation:</p>
+          <ul>
+            <li>Higher temperature leads to larger fluctuations.</li>
+            <li>Larger spring constant leads to smaller fluctuations.</li>
+            <li>ENMs connect network stiffness to molecular flexibility.</li>
+          </ul>
+
+          <h2>Extending to 2D and 3D</h2>
+          <p>In higher dimensions, fluctuations are described by covariance matrices instead of a single scalar. That is the bridge from simple springs to the matrix formulation used in GNM and ANM.</p>
+
+          <p><a href="Week1-ENMs-Introduction.md">View the full markdown lesson</a></p>
+        </article>
+      </main>
+    </div>
+  </body>
+  </html>
+

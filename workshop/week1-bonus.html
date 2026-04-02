@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Week 1 Bonus Notes | ENMs Workshop</title>
+    <meta name="description" content="Week 1 bonus theory notes.">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['\\[', '\\]']]
+        },
+        svg: {
+          fontCache: 'global'
+        }
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  </head>
+  <body>
+    <div class="site-shell">
+      <aside class="site-sidebar">
+        <a class="brand" href="../index.html">
+          <span class="brand-mark">ENM</span>
+          <span class="brand-copy">
+            <strong>ENMs Workshop</strong>
+            <span>Static GitHub Pages site</span>
+          </span>
+        </a>
+
+        <nav class="site-nav" aria-label="Primary">
+          <a href="../index.html">Home</a>
+          <a href="index.html">Workshop Guide</a>
+          <a href="week1-enms.html">Week 1: ENMs</a>
+          <a href="week1-py-rcsb-api.html">Week 1: py-rcsb-api</a>
+          <a href="week1-bonus.html" aria-current="page">Bonus Notes</a>
+        </nav>
+      </aside>
+
+      <main class="site-main">
+        <header class="page-header">
+          <p class="page-kicker">Bonus Material</p>
+          <h1>Week 1 Bonus Notes</h1>
+          <p class="page-lead">Optional background notes on Newton's laws, kinetic energy, and harmonic potentials for students who want more theory.</p>
+        </header>
+
+        <article class="page-content">
+          <h2>Newton's second law</h2>
+          <div class="math-block">\[F = ma\]</div>
+          <p>Classical motion begins with the relation between force, mass, and acceleration. From position <code>x(t)</code>, we define velocity and acceleration as time derivatives.</p>
+          <p><img src="../images/week1_bonus_newtons_second_law.png" alt="Newton's second law"></p>
+
+          <h2>Kinetic energy</h2>
+          <div class="math-block">\[K = \frac{1}{2}mv^2\]</div>
+          <p>Kinetic energy measures how strongly a particle is moving. It connects naturally to work and force through differential motion.</p>
+
+          <h2>Potential energy</h2>
+          <p>For conservative systems, force can be defined from the potential:</p>
+          <div class="math-block">\[F(x) = -\frac{dV(x)}{dx}\]</div>
+
+          <h2>Harmonic oscillator</h2>
+          <div class="math-block">\[V(x) = \frac{1}{2}k(x-x_0)^2\]</div>
+          <p>This is the central approximation used in ENMs: near equilibrium, many interactions can be approximated as springs.</p>
+          <p><img src="../images/week1_bonus_harmonic_oscillator.png" alt="Harmonic oscillator"></p>
+
+          <h2>Harmonic approximation near equilibrium</h2>
+          <p>Even when the true potential is complicated, near an equilibrium point it can often be approximated by the quadratic form above.</p>
+          <p><img src="../images/week1_bonus_harmonic_approximation.png" alt="Harmonic approximation"></p>
+
+          <p><a href="Week1-bonus.md">View the full markdown lesson</a></p>
+        </article>
+      </main>
+    </div>
+  </body>
+  </html>
+

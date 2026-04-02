@@ -2,6 +2,21 @@
 
 This workshop includes the Week 1 lesson on `ENMs` and `py-rcsb-api`.
 
+## Website
+
+This repository now includes a static GitHub Pages site from the repository root.
+
+After pushing to GitHub, enable **Settings -> Pages** and publish from:
+
+- Branch: your default branch
+- Folder: `/ (root)`
+
+The site homepage will be served at:
+
+- `https://locitran.github.io/ENMs_workshop/`
+
+The website uses plain `html` and `css`, plus `.nojekyll` so GitHub Pages serves it directly without Jekyll.
+
 ## Files
 
 - `workshop/Week1-py-rcsb-api.md`: workshop notes for `py-rcsb-api`
@@ -57,4 +72,3 @@ This test should import `rcsbapi` and run a small example. It needs internet acc
 ```bash
 python check_setup.py
 ```
-

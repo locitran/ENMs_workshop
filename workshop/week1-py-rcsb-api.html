@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Week 1: py-rcsb-api | ENMs Workshop</title>
+    <meta name="description" content="Week 1 introduction to py-rcsb-api.">
+    <link rel="stylesheet" href="../assets/css/style.css">
+  </head>
+  <body>
+    <div class="site-shell">
+      <aside class="site-sidebar">
+        <a class="brand" href="../index.html">
+          <span class="brand-mark">ENM</span>
+          <span class="brand-copy">
+            <strong>ENMs Workshop</strong>
+            <span>Static GitHub Pages site</span>
+          </span>
+        </a>
+
+        <nav class="site-nav" aria-label="Primary">
+          <a href="../index.html">Home</a>
+          <a href="index.html">Workshop Guide</a>
+          <a href="week1-enms.html">Week 1: ENMs</a>
+          <a href="week1-py-rcsb-api.html" aria-current="page">Week 1: py-rcsb-api</a>
+          <a href="week1-bonus.html">Bonus Notes</a>
+        </nav>
+      </aside>
+
+      <main class="site-main">
+        <header class="page-header">
+          <p class="page-kicker">Lesson 2</p>
+          <h1>Week 1: Introduction to py-rcsb-api</h1>
+          <p class="page-lead">Learn how to search RCSB PDB data and retrieve structured information using the Python API.</p>
+        </header>
+
+        <article class="page-content">
+          <h2>Topics</h2>
+          <ul>
+            <li>What <code>py-rcsb-api</code> is</li>
+            <li>Installation and imports</li>
+            <li>Search API basics</li>
+            <li>Data API basics</li>
+            <li>Hands-on exercises</li>
+          </ul>
+
+          <h2>What is <code>py-rcsb-api</code>?</h2>
+          <p><a href="https://github.com/rcsb/py-rcsb-api"><code>py-rcsb-api</code></a> is a Python toolkit for accessing RCSB PDB services such as the Search API and Data API.</p>
+
+          <h2>Search API</h2>
+          <p>The Search API helps find PDB entries that match conditions.</p>
+          <h3>Text search</h3>
+          <pre><code class="language-python">from rcsbapi.search import TextQuery
+query = TextQuery(value="Hemoglobin")
+results = list(query())
+print(results[:10])</code></pre>
+          <p><img src="../images/week%201%20-%20Text%20search.png" alt="Text search example"></p>
+
+          <h3>Attribute search</h3>
+          <pre><code class="language-python">from rcsbapi.search import AttributeQuery
+query = AttributeQuery(
+    attribute="rcsb_entity_source_organism.scientific_name",
+    operator="exact_match",
+    value="Homo sapiens"
+)</code></pre>
+          <p><img src="../images/week%201%20-%20Attribute%20search.png" alt="Attribute search example"></p>
+
+          <h3>Combining queries</h3>
+          <pre><code class="language-python">q1 = TextQuery(value="Hemoglobin")
+q2 = attrs.rcsb_entity_source_organism.scientific_name == "Homo sapiens"
+query = q1 &amp; q2</code></pre>
+          <p><img src="../images/week%201%20-%20Combining%20queries.png" alt="Combining query example"></p>
+
+          <h2>Data API</h2>
+          <p>The Data API retrieves structured information for known PDB IDs.</p>
+          <pre><code class="language-python">from rcsbapi.data import DataQuery
+
+query = DataQuery(
+    input_type="entries",
+    input_ids=["4HHB"],
+    return_data_list=["rcsb_id", "struct.title", "exptl.method"]
+)
+
+result = query.exec()</code></pre>
+
+          <h2>Exercises</h2>
+          <ul>
+            <li>Search for <code>insulin</code> and print the first 10 PDB IDs.</li>
+            <li>Find entries from <code>Mus musculus</code>.</li>
+            <li>Filter by X-ray diffraction and resolution cutoff.</li>
+            <li>Combine a kinase query with a human organism filter.</li>
+          </ul>
+
+          <p><a href="Week1-py-rcsb-api.md">View the full markdown lesson</a></p>
+        </article>
+      </main>
+    </div>
+  </body>
+  </html>
+
