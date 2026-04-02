@@ -1,3 +1,12 @@
+---
+layout: default
+title: Week 1: Introduction to ENMs
+kicker: Lesson 1
+lead: Core concepts behind elastic network models, including collective motion, fluctuations, and spring-based intuition.
+description: Week 1 ENMs lesson page.
+permalink: /docs/week1-enms/
+---
+
 <h1 style="color:#1f4e79; background:#eaf2f8; padding:12px 16px; border-left:6px solid #5b9bd5; border-radius:8px;">Week 1: Introduction to ENMs</h1>
 
 <p>

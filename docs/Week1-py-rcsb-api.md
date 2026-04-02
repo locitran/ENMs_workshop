@@ -4,7 +4,7 @@ title: Week 1: Introduction to py-rcsb-api
 kicker: Lesson 2
 lead: Learn how to search RCSB PDB data and retrieve structured information using the Python API.
 description: Week 1 py-rcsb-api lesson page.
-permalink: /workshop/week1-py-rcsb-api/
+permalink: /docs/week1-py-rcsb-api/
 ---
 
 # Week 1: Introduction to py-rcsb-api

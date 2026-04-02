@@ -1,3 +1,12 @@
+---
+layout: default
+title: Week 1 Bonus Notes
+kicker: Bonus Material
+lead: Optional background notes on Newton's laws, kinetic energy, and harmonic potentials for students who want more theory.
+description: Week 1 bonus theory notes.
+permalink: /docs/week1-bonus/
+---
+
 <details open>
     <summary>
         <span style="font-size: 24px;">
