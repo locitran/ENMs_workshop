@@ -1,0 +1,8 @@
+title: ENMs Workshop
+description: Elastic Network Models workshop materials and hands-on notes.
+theme: null
+markdown: kramdown
+kramdown:
+  input: GFM
+permalink: pretty
+

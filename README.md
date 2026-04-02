@@ -4,23 +4,24 @@ This workshop includes the Week 1 lesson on `ENMs` and `py-rcsb-api`.
 
 ## Website
 
-This repository now includes a static GitHub Pages site from the repository root.
+This repository includes a GitHub Pages site in `docs/` built from markdown files with Jekyll.
 
 After pushing to GitHub, enable **Settings -> Pages** and publish from:
 
 - Branch: your default branch
-- Folder: `/ (root)`
+- Folder: `/docs`
 
 The site homepage will be served at:
 
 - `https://locitran.github.io/ENMs_workshop/`
 
-The website uses plain `html` and `css`, plus `.nojekyll` so GitHub Pages serves it directly without Jekyll.
+GitHub Pages will render the markdown pages in `docs/` automatically through Jekyll.
 
 ## Files
 
 - `workshop/Week1-py-rcsb-api.md`: workshop notes for `py-rcsb-api`
 - `workshop/Week1-ENMs-Introduction.md`: ENM introduction notes
+- `docs/`: Jekyll site for GitHub Pages
 - `requirements.txt`: Python packages for this workshop
 - `check_setup.py`: simple setup test
 

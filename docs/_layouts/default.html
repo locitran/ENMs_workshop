@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+    <meta name="description" content="{{ page.description | default: site.description }}">
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['\\[', '\\]']]
+        },
+        svg: {
+          fontCache: 'global'
+        }
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  </head>
+  <body>
+    <div class="site-shell">
+      <aside class="site-sidebar">
+        <a class="brand" href="{{ '/' | relative_url }}">
+          <span class="brand-mark">ENM</span>
+          <span class="brand-copy">
+            <strong>{{ site.title }}</strong>
+            <span>GitHub Pages course site</span>
+          </span>
+        </a>
+
+        <nav class="site-nav" aria-label="Primary">
+          <a href="{{ '/' | relative_url }}" {% if page.url == '/' %}aria-current="page"{% endif %}>Home</a>
+          <a href="{{ '/workshop/' | relative_url }}" {% if page.url == '/workshop/' %}aria-current="page"{% endif %}>Workshop Guide</a>
+          <a href="{{ '/workshop/outline/' | relative_url }}" {% if page.url == '/workshop/outline/' %}aria-current="page"{% endif %}>Workshop Outline</a>
+          <a href="{{ '/workshop/week1-enms/' | relative_url }}" {% if page.url == '/workshop/week1-enms/' %}aria-current="page"{% endif %}>Week 1: ENMs</a>
+          <a href="{{ '/workshop/week1-py-rcsb-api/' | relative_url }}" {% if page.url == '/workshop/week1-py-rcsb-api/' %}aria-current="page"{% endif %}>Week 1: py-rcsb-api</a>
+          <a href="{{ '/workshop/week1-bonus/' | relative_url }}" {% if page.url == '/workshop/week1-bonus/' %}aria-current="page"{% endif %}>Bonus Notes</a>
+        </nav>
+
+        <div class="sidebar-note">
+          <p>These pages are written in markdown and rendered by GitHub Pages with Jekyll.</p>
+        </div>
+      </aside>
+
+      <main class="site-main">
+        <header class="page-header">
+          {% if page.kicker %}
+          <p class="page-kicker">{{ page.kicker }}</p>
+          {% endif %}
+          {% if page.title %}
+          <h1>{{ page.title }}</h1>
+          {% endif %}
+          {% if page.lead %}
+          <p class="page-lead">{{ page.lead }}</p>
+          {% endif %}
+        </header>
+
+        <article class="page-content">
+          {{ content }}
+        </article>
+      </main>
+    </div>
+
+    <script>
+      document.querySelectorAll('pre code.language-math').forEach(function(node) {
+        var wrapper = document.createElement('div');
+        wrapper.className = 'math-block';
+        wrapper.textContent = '\\[' + node.textContent.trim() + '\\]';
+        node.parentElement.replaceWith(wrapper);
+      });
+    </script>
+  </body>
+  </html>
+

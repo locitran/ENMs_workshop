@@ -212,6 +212,10 @@ td {
   line-height: 1.2;
 }
 
+.page-content > h1:first-child {
+  display: none;
+}
+
 .page-content h2 {
   margin-top: 2.6rem;
   padding-bottom: 0.35rem;
