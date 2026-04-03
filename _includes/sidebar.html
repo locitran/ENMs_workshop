@@ -1,0 +1,21 @@
+<aside class="site-sidebar">
+  <a class="brand" href="{{ '/' | relative_url }}">
+    <span class="brand-mark">ENM</span>
+    <span class="brand-copy">
+      <strong>{{ site.title }}</strong>
+      <span>GitHub Pages course site</span>
+    </span>
+  </a>
+
+  <nav class="site-nav" aria-label="Primary">
+    <a href="{{ '/' | relative_url }}" {% if page.url == '/' %}aria-current="page"{% endif %}>Home</a>
+    <a href="{{ '/intro-enms/' | relative_url }}" {% if page.url == '/intro-enms/' %}aria-current="page"{% endif %}>Week 1: Introduction</a>
+    <a href="{{ '/py-rcsb-api/' | relative_url }}" {% if page.url == '/py-rcsb-api/' %}aria-current="page"{% endif %}>Week 1: py-rcsb-api</a>
+    <a href="{{ '/two-particle-motion/' | relative_url }}" {% if page.url == '/two-particle-motion/' %}aria-current="page"{% endif %}>Two-particle motion</a>
+    <a href="{{ '/outline/' | relative_url }}" {% if page.url == '/outline/' %}aria-current="page"{% endif %}>Workshop Outline</a>
+  </nav>
+
+  <div class="sidebar-note">
+    <p>These pages are written in markdown and rendered by GitHub Pages with Jekyll.</p>
+  </div>
+</aside>

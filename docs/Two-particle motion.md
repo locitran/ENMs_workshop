@@ -3,8 +3,8 @@ layout: default
 title: Week 1 Bonus Notes
 kicker: Bonus Material
 lead: Optional background notes on Newton's laws, kinetic energy, and harmonic potentials for students who want more theory.
-description: Week 1 bonus theory notes.
-permalink: /docs/week1-bonus/
+description: Two-particle motion.
+permalink: /two-particle-motion/
 ---
 
 <details open>
@@ -40,7 +40,7 @@ and **acceleration** as the rate of change of velocity:
 a = \frac{dv}{dt} = \frac{d^2x}{dt^2} \tag{3}
 ```
 
-<p align="center"><img src="{{ '/images/week1_bonus_newtons_second_law.png' | relative_url }}" alt="Newton's second law" width="420"></p>
+<p align="center"><img src="../images/week1_bonus_newtons_second_law.png" alt="Newton's second law" width="420"></p>
 
 </details>
 
@@ -219,7 +219,7 @@ V(x) = \frac{1}{2}k(x-x_0)^2 \tag{23}
 This is the **harmonic potential**.
 It is a parabola centered at the equilibrium position `x_0`.
 
-![Harmonic oscillator]({{ '/images/week1_bonus_harmonic_oscillator.png' | relative_url }})
+![Harmonic oscillator](<../images/week1_bonus_harmonic_oscillator.png>)
 
 </details>
 
@@ -269,7 +269,7 @@ This is why the harmonic oscillator is so important.
 Even when the true potential is complicated, near equilibrium it can often be approximated by a harmonic potential.
 This is the key idea behind normal mode analysis and elastic network models.
 
-![Harmonic approximation]({{ '/images/week1_bonus_harmonic_approximation.png' | relative_url }})
+![Harmonic approximation](<../images/week1_bonus_harmonic_approximation.png>)
 
 Reference:
 Tom W. B. Kibble and Frank H. Berkshire, *Classical Mechanics*, Chapter 2: Linear Motion, Sections 2.1 and 2.2.
