@@ -201,6 +201,7 @@ td {
   max-width: 64rem;
   margin: 0 auto;
   padding: clamp(1.25rem, 2vw, 2rem);
+  font-size: 1.125rem;
   border-radius: calc(var(--radius) + 4px);
   background: rgba(255, 253, 248, 0.92);
   box-shadow: var(--shadow);
@@ -264,12 +265,16 @@ td {
 
 .math-block {
   overflow-x: auto;
-  padding: 1rem 0.35rem;
+  padding: 0.1rem 0;
+}
+
+.page-content mjx-container {
+  font-size: 1.8em !important;
 }
 
 details {
   margin: 1rem 0;
-  padding: 0.25rem 1rem 0.75rem;
+  padding: 0.1rem 1rem 0.2rem;
   border: 1px solid var(--line);
   border-radius: 14px;
   background: #fffaf2;
@@ -297,4 +302,3 @@ summary {
     padding-top: 1.5rem;
   }
 }
-

@@ -1,13 +1,11 @@
 ---
 layout: default
-title: Elastic Network Models in Protein Dynamics
+title: Outline
 kicker: Workshop Guide
 lead: The full multi-week outline for the ENMs workshop, including references and planned practical sessions.
 description: Multi-week ENMs workshop outline.
 permalink: /outline/
 ---
-
-Outline of workshop plan
 
 # Week 1: Introduction
 ## Part 1

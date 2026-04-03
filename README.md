@@ -19,6 +19,14 @@ This website presents the workshop materials in a browser-friendly format, inclu
 
 GitHub Pages will render the markdown pages in the repository root automatically through Jekyll.
 
+## Website Tree
+
+- Home: `https://locitran.github.io/ENMs_workshop/`
+- Workshop Outline: `https://locitran.github.io/ENMs_workshop/outline/`
+- Week 1 Introduction: `https://locitran.github.io/ENMs_workshop/intro-enms/`
+- Week 1 py-rcsb-api: `https://locitran.github.io/ENMs_workshop/py-rcsb-api/`
+- Two-particle motion: `https://locitran.github.io/ENMs_workshop/two-particle-motion/`
+
 ## Files
 
 - `docs/Week1-py-rcsb-api.md`: workshop notes for `py-rcsb-api`
@@ -75,6 +83,3 @@ This test should import `rcsbapi` and run a small example. It needs internet acc
 ```bash
 python check_setup.py
 ```
-
-https://locitran.github.io/ENMs_workshop/
-https://locitran.github.io/ENMs_workshop/intro-enms/

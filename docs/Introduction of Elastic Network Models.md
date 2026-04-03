@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Week 1: Introduction to ENMs
-kicker: Lesson 1
-lead: Core concepts behind elastic network models, including collective motion, fluctuations, and spring-based intuition.
-description: Introduction of Elastic Network Models
+title: "Week 1: Introduction to ENMs"
+kicker: "Lesson 1"
+lead: "Core concepts behind elastic network models, including collective motion, fluctuations, and spring-based intuition."
+description: "Introduction of Elastic Network Models"
 permalink: /intro-enms/
 ---
 
-<h1 style="color:#1f4e79; background:#eaf2f8; padding:12px 16px; border-left:6px solid #5b9bd5; border-radius:8px;">Week 1: Introduction to ENMs</h1>
+# Week 1: Introduction to ENMs
 
 <p>
   <span style="background:#fff2cc; color:#7f6000; padding:2px 8px; border-radius:999px;"><strong>Topics</strong></span>
@@ -20,7 +20,7 @@ permalink: /intro-enms/
 - What does a spring actually do?
 - What is the mean-square fluctuation of a two-particle system in a harmonic potential at temperature T?
 
-<h2 style="color:#c55a11; border-bottom:2px solid #f4b183; padding-bottom:4px;">Two widely known ENMs with numerous applications</h2>
+## Two widely known ENMs with numerous applications
 
 Elastic Network Models (ENMs) is a coarse-grained model used to study structural dynamics and conformational transitions of proteins and large biomolecules.
 
@@ -32,7 +32,7 @@ Elastic Network Models (ENMs) is a coarse-grained model used to study structural
   * Eyal E, Lum G, Bahar I (2015) The Anisotropic Network Model web server at
     2015 (ANM 2.0) Bioinformatics 3l: 1487-9
 
-<h2 style="color:#c55a11; border-bottom:2px solid #f4b183; padding-bottom:4px;">What do ENMs study?</h2>
+## What do ENMs study?
 
 1. Collective (global) couplings motions (link to low frequency mode).
    - Global in the sense that they involve entire structure (are not localized).
@@ -44,11 +44,11 @@ Elastic Network Models (ENMs) is a coarse-grained model used to study structural
 
 ref: dynomics.pitt.edu
 
-<h2 style="color:#c55a11; border-bottom:2px solid #f4b183; padding-bottom:4px;">Each structure encodes a unique dynamics?</h2>
+## Each structure encodes a unique dynamics?
 
 ![alt text]({{ '/images/Each structure encodes a unique dynamics.png' | relative_url }})
 
-<h2 style="color:#c55a11; border-bottom:2px solid #f4b183; padding-bottom:4px;">What do ENMs do?</h2>
+## What do ENMs do?
 
 ![alt text]({{ '/images/What do ENMs do.png' | relative_url }})
 
@@ -61,7 +61,7 @@ Using ENMs, we get something called normal modes. These are the natural ways the
 - The first few modes — like Mode 1, 2, 3 — are the most important because they correspond to large-scale, functional motions.
 - For HIV protease, these modes often correspond to flap opening and closing and breathing motions of the active site.
 
-<h2 style="color:#c55a11; border-bottom:2px solid #f4b183; padding-bottom:4px;">What does a spring actually do?</h2>
+## What does a spring actually do?
 
 Let us define a two-particle system containing 2 particles.
 Let the distance between the two particles be `x`, and let the interaction follow a harmonic potential:
@@ -148,7 +148,7 @@ It tells us that:
 So a softer spring gives larger fluctuations, while a stiffer spring gives smaller fluctuations.
 This is the physical idea behind why ENMs can connect network stiffness to molecular fluctuations.
 
-<h2 style="color:#c55a11; border-bottom:2px solid #f4b183; padding-bottom:4px;">How do we extend this to 2D?</h2>
+## How do we extend this to 2D?
 
 In the previous example, the fluctuation `x` was only along one direction.
 Now let us keep the same two-particle system, but allow the relative displacement to move in two dimensions.
@@ -269,7 +269,7 @@ So compared with the 1D case:
 
 This is the key step toward ENMs, where fluctuations are described in multiple dimensions and are represented by matrices rather than a single number.
 
-<h2 style="color:#c55a11; border-bottom:2px solid #f4b183; padding-bottom:4px;">What about 3D?</h2>
+## What about 3D?
 
 In 3D, the same idea still applies.
 The total mean-square displacement is:
@@ -294,7 +294,7 @@ So the pattern is:
 
 This is why, in ENMs, fluctuations are naturally described in 3D Cartesian space.
 
-<h2 style="color:#c55a11; border-bottom:2px solid #f4b183; padding-bottom:4px;">Now move to a 3-particle system in 3D</h2>
+## Now move to a 3-particle system in 3D
 
 Now we take the next step toward ENMs.
 Instead of two particles, we consider three particles in 3D space.

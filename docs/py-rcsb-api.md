@@ -1,9 +1,9 @@
 ---
 layout: default
-title: Week 1: Introduction to py-rcsb-api
-kicker: Lesson 2
-lead: Learn how to search RCSB PDB data and retrieve structured information using the Python API.
-description: Introduction of py-rcsb-api package.
+title: "Week 1: Introduction to py-rcsb-api"
+kicker: "Lesson 2"
+lead: "Learn how to search RCSB PDB data and retrieve structured information using the Python API."
+description: "Introduction of py-rcsb-api package."
 permalink: /py-rcsb-api/
 ---
 
