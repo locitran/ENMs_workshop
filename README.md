@@ -21,11 +21,11 @@ GitHub Pages will render the markdown pages in the repository root automatically
 
 ## Website Tree
 
-- Home: `https://locitran.github.io/ENMs_workshop/`
-- Workshop Outline: `https://locitran.github.io/ENMs_workshop/outline/`
-- Week 1 Introduction: `https://locitran.github.io/ENMs_workshop/intro-enms/`
-- Week 1 py-rcsb-api: `https://locitran.github.io/ENMs_workshop/py-rcsb-api/`
-- Two-particle motion: `https://locitran.github.io/ENMs_workshop/two-particle-motion/`
+- Home: https://locitran.github.io/ENMs_workshop/
+- Workshop Outline: https://locitran.github.io/ENMs_workshop/outline/
+- Week 1 Introduction: https://locitran.github.io/ENMs_workshop/intro-enms/
+- Week 1 py-rcsb-api: https://locitran.github.io/ENMs_workshop/py-rcsb-api/
+- Two-particle motion: https://locitran.github.io/ENMs_workshop/two-particle-motion/
 
 ## Files
 
