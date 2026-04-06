@@ -1,10 +1,12 @@
 ---
 layout: default
-title: Harmonic Potential Energykicker: Bonus Material
+title: Harmonic Potential Energy
+kicker: Bonus Material
 lead: Additional notes on harmonic oscillators and the relationship between force and potential energy.
 description: Harmonic potential energy notes.
 permalink: /harmonic-potential-energy/
 ---
+
 ## Harmonic Oscillator
 
 Consider a two-particle system moving in one dimension. Let the positions of the two particles be $r_1$ and $r_2$. The quantity we care about is their distance,

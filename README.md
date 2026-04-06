@@ -11,9 +11,7 @@ After pushing to GitHub, enable **Settings -> Pages** and publish from:
 - Branch: your default branch
 - Folder: `/ (root)`
 
-The site homepage will be served at:
-
-- `https://locitran.github.io/ENMs_workshop/`
+The site homepage will be served at: https://locitran.github.io/ENMs_workshop/
 
 This website presents the workshop materials in a browser-friendly format, including the introduction to elastic network models, the `py-rcsb-api` lesson, additional theory notes, and the overall workshop outline.
 
