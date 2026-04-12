@@ -8,7 +8,7 @@ permalink: /harmonic-potential-energy/
 ---
 ## Harmonic Oscillator
 
-Consider a two-particle system moving in 1D. Let $r_1,r_2$ and $r_1^0,r_2^0$ the positions of the two particles be $r_1$ and $r_2$. So in this page, we define:
+Consider a two-particle system moving in 1D. Let $r_1$ and $r_2$ be the instantaneous positions of the two particles, and let $r_1^0$ and $r_2^0$ be their equilibrium positions. On this page, we define:
 
 - $\Delta r=r_2-r_1$ is the instantaneous distance between the two particles
 - $\Delta r^0=r_2^0-r_1^0$ is the equilibrium distance between the two particles
@@ -60,7 +60,7 @@ V(\Delta r) \approx \frac{1}{2}(\Delta r-\Delta r^0)^2V''(\Delta r^0) = \frac{1}
 
 $$
 
-,where $k=V''(\Delta r^0)$ is the curvature of the potential energy at the equilibrium distance, or the spring constant. If we choose the coordinate origin so that the equilibrium distance is at zero, that is, $\Delta r^0=0$, then the harmonic approximation simplifies to
+where $k=V''(\Delta r^0)$ is the curvature of the potential energy at the equilibrium distance, or the spring constant. If we choose the coordinate origin so that the equilibrium distance is at zero, that is, $\Delta r^0=0$, then the harmonic approximation simplifies to
 
 $$
 V(\Delta r) \approx \frac{1}{2}k(\Delta r)^2. \tag{7}
@@ -78,9 +78,9 @@ This is the standard form of Hooke's law: the force is proportional to the displ
 
 > Reference: Tom W. B. Kibble and Frank H. Berkshire, *Classical Mechanics*, Chapter 2: Linear Motion, Sections 2.1 and 2.2.
 
-## At temperature T, what is the size of fluctuation? (Thermal fluctation)
+## At Temperature $T$: What Is the Size of the Fluctuation?
 
-Let us define the displacement from equilibritum is $x=\Delta r - \Delta r^0 $. Then, we have $V(x) = \frac{1}{2}kx^2$ (harmonic approximation of potential) and $P(x) = \frac{1}{Z} \exp(-\frac{V(x)}{k_B T})$ (Boltzmann distribution), where partition function $Z = \int_{-\infty}^{\infty} \exp(-\frac{kx^2}{2k_B T})\,dx$ and $k_B$ is Boltzmann constant.
+Define the displacement from equilibrium as $x=\Delta r - \Delta r^0$. Then the harmonic approximation gives $V(x) = \frac{1}{2}kx^2$, and the Boltzmann distribution gives $P(x) = \frac{1}{Z} \exp\left(-\frac{V(x)}{k_B T}\right)$, where the partition function is $Z = \int_{-\infty}^{\infty} \exp\left(-\frac{kx^2}{2k_B T}\right)\,dx$ and $k_B$ is the Boltzmann constant.
 
 The ensemble average of the fluctuation is
 
@@ -91,40 +91,43 @@ $$
 
 $$
 
-Because, at equilibrium, we have $\Delta r = \Delta r^0$ or $\langle\Delta r \rangle = \Delta r^0$. To measure the size of the fluctuation, we consider the mean-square fluctuation:
+At equilibrium, we have $\langle \Delta r \rangle = \Delta r^0$. To measure the size of the fluctuation, we therefore consider the mean-square fluctuation (MSF):
 
 $$
+\begin{aligned}
 \langle x^2 \rangle
-=
-\int_{-\infty}^{\infty} x^2 P(x)\,dx = \frac{1}{Z} \int_{-\infty}^{\infty} x^2 e^{-kx^2/(2k_B T)} dx = \frac{1}{Z} \int_{-\infty}^{\infty} x^2 e^{-ax^2} dx  \tag{10}
+&=
+\int_{-\infty}^{\infty} x^2 P(x)\,dx \\
+&= \frac{1}{Z} \int_{-\infty}^{\infty} x^2 e^{-kx^2/(2k_B T)} \, dx \\
+&= \frac{1}{Z} \int_{-\infty}^{\infty} x^2 e^{-ax^2} \, dx
+\end{aligned} \tag{10}
 
 $$
 
-, where $a = \frac{k}{2k_B T}$. Using the Gaussian integral result ([ref](https://quantummechanics.ucsd.edu/ph130a/130_notes/node87.html)): $\int_{-\infty}^{\infty} x^2 e^{-ax^2} dx = \frac{1}{2a}\sqrt{\frac{\pi}{a}}$, we have
+where $a = \frac{k}{2k_B T}$. Using the Gaussian integral result ([ref](https://quantummechanics.ucsd.edu/ph130a/130_notes/node87.html)), $\int_{-\infty}^{\infty} x^2 e^{-ax^2} dx = \frac{1}{2a}\sqrt{\frac{\pi}{a}}$, we have
 
 $$
 \langle x^2 \rangle = \frac{1}{Z} \cdot \frac{1}{2a}\sqrt{\frac{\pi}{a}}
 
 $$
 
-Now, what is `Z`? The partition function is: $Z = \int_{-\infty}^{\infty} e^{-ax^2} dx = \sqrt{\frac{\pi}{a}}$. Therefore,
+What is $Z$? The partition function is $Z = \int_{-\infty}^{\infty} e^{-ax^2} dx = \sqrt{\frac{\pi}{a}}$. Therefore,
 
 $$
+\begin{aligned}
 \langle x^2 \rangle
-= \frac{1}{\sqrt{\pi/a}} \cdot \frac{1}{2a}\sqrt{\frac{\pi}{a}}
-= \frac{1}{2a}
-= \frac{k_B T}{k}
+&= \frac{1}{\sqrt{\pi/a}} \cdot \frac{1}{2a}\sqrt{\frac{\pi}{a}} \\
+&= \frac{1}{2a} \\
+&= \frac{k_B T}{k}
+\end{aligned}
 
 $$
 
 This is an important result.
 It tells us that:
 
-- the mean-square fluctuation increases with temperature
-- the mean-square fluctuation decreases when the spring constant becomes larger
-
-So a softer spring gives larger fluctuations, while a stiffer spring gives smaller fluctuations.
-This is the physical idea behind why ENMs can connect network stiffness to molecular fluctuations.
+- MSF increases with temperature
+- MSF decreases when the spring constant becomes larger
 
 ## Solution of Harmonic Motion
 
@@ -142,7 +145,7 @@ a_2(t)\Delta r'' + a_1(t)\Delta r' + a_0(t)\Delta r = b(t) \tag{12}
 
 $$
 
-, where $a_2(t)=m$, $a_1(t)=0$, $a_0(t)=k$, and $b(t)=0$. Therefore, the equation of motion for $\Delta r(t)$ is a **second-order linear differential equation**. In operator form, we may define the linear differential operator
+where $a_2(t)=m$, $a_1(t)=0$, $a_0(t)=k$, and $b(t)=0$. Therefore, the equation of motion for $\Delta r(t)$ is a **second-order linear differential equation**. In operator form, we may define the linear differential operator
 
 $$
 \mathcal{L}[\Delta r] = m\frac{d^2(\Delta r)}{dt^2} + k\Delta r, \tag{13}
@@ -175,7 +178,7 @@ Since $e^{\lambda t}$ is never zero, we can divide both sides by it and obtain
 $$
 \begin{aligned}
 m\lambda^2 + k &= 0 \Leftrightarrow \lambda^2 = -\frac{k}{m} \\
-\Rightarrow \lambda &= \pm i\sqrt{\frac{k}{m}} = \pm i \omega \qquad (\omega=\sqrt{\frac{k}{m}})
+\lambda &= \pm i\sqrt{\frac{k}{m}} = \pm i \omega \qquad (\omega=\sqrt{\frac{k}{m}})
 \end{aligned} \tag{17}
 
 $$
@@ -189,7 +192,7 @@ $$
 
 $$
 
-, where A and B are arbitrary complex numbers. Although this expression is written in terms of complex exponentials, the physical displacement must be real. Using [Euler's formula](https://en.wikipedia.org/wiki/Euler%27s_formula),
+where $A$ and $B$ are arbitrary complex numbers. Although this expression is written in terms of complex exponentials, the physical displacement must be real. Using [Euler's formula](https://en.wikipedia.org/wiki/Euler%27s_formula),
 
 $$
 \begin{aligned}
@@ -206,7 +209,7 @@ $$
 
 $$
 
-where $a$ and $b$ are real constants determined by the initial conditions. This shows that the motion is sinusoidal, with angular frequency $\omega=\sqrt{\frac{k}{m}}$ ($k=m\omega^2$, spring constant is proportional to frequency square).
+where $a$ and $b$ are real constants determined by the initial conditions. This shows that the motion is sinusoidal, with angular frequency $\omega=\sqrt{\frac{k}{m}}$; equivalently, $k=m\omega^2$, so the spring constant is proportional to the frequency squared.
 
 > How can we determine the constants $a$ and $b$ from the initial position and initial velocity?
 
@@ -217,7 +220,7 @@ It tells us that the particle oscillates with angular frequency
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Angularvelocity.svg/3840px-Angularvelocity.svg.png" alt="Angular frequency diagram" width="420">
 </p>
 
-*Figure source:* [Simple English Wikipedia: Angular frequency](https://simple.wikipedia.org/wiki/Angular_frequency##/media/File:Angularvelocity.svg)
+*Figure source:* [Simple English Wikipedia: Angular frequency](https://simple.wikipedia.org/wiki/Angular_frequency#/media/File:Angularvelocity.svg)
 
 In general physics, **angular frequency** $\omega$ measures how fast a system moves through an angle or phase.
 For an object rotating around a circle, it is defined by $\omega = \frac{d\theta}{dt}$, where $\theta$ is the angle swept out in time $t$.
@@ -239,9 +242,9 @@ still contains the phase $\omega t$.
 That phase plays the same mathematical role as an angle in circular motion.
 So even though the motion is back-and-forth along one line, $\omega$ still measures how fast the oscillation goes through one cycle.
 
-## Harmonic motion in 2D
+## Harmonic Motion in 2D
 
-We derive the same in 2D. So in this page, we define:
+Now we extend the same idea to 2D. In this section, we define:
 
 - $\mathbf{r}_1 = [x_1\ y_1]^T$ and $\mathbf{r}_2 = [x_2\ y_2]^T$ are the position vectors.
 - $\mathbf{r}_1^0 = [x_1^0\ y_1^0]^T$ and $\mathbf{r}_2^0 = [x_2^0\ y_2^0]^T$ are the equilibrium position vectors.
@@ -266,7 +269,7 @@ $$
 
 $$
 
-Here, $\nabla_{\Delta \mathbf{r}} V$ is the gradient of the potential $V$ with respect to the separation vector $\Delta \mathbf{r}$, so we may think of it as the first derivative of $V$ with respect to $\Delta \mathbf{r}$. In 2D, it becomes a $2\times 2$ matrix, called the **Hessian matrix**:
+Here, $\nabla_{\Delta \mathbf{r}} V$ is the gradient of the potential $V$ with respect to the separation vector $\Delta \mathbf{r}$, so it is the first derivative of $V$ with respect to $\Delta \mathbf{r}$. The matrix of second derivatives is the $2\times 2$ **Hessian matrix**:
 
 $$
 \mathbf{H}(\Delta \mathbf{r}) = \nabla_{\Delta \mathbf{r}}\!\left(\nabla_{\Delta \mathbf{r}} V\right)
@@ -289,11 +292,11 @@ $$
 The matrix $\mathbf{H}$ tells us how strongly the system resists displacement in each direction and whether motions in different directions are coupled. If this resistance is the same in every direction, then the motion is called **isotropic**; otherwise, it is **anisotropic**. In the **isotropic** case, the Hessian matrix is proportional to the identity matrix,
 
 $$
-\mathbf{H} = k I, \tag{24}
+\mathbf{H} = k \mathbf{I}, \tag{24}
 
 $$
 
-where $k=\dfrac{\partial^2 V}{\partial (\Delta x)^2}=\dfrac{\partial^2 V}{\partial (\Delta x)\partial (\Delta y)}=\dfrac{\partial^2 V}{\partial (\Delta y)^2}$ is the uniform spring constant and $I$ is the identity matrix. Then the restoring force has the same strength in every direction.
+where $k=\dfrac{\partial^2 V}{\partial (\Delta x)^2}=\dfrac{\partial^2 V}{\partial (\Delta y)^2}$, the mixed derivative vanishes, and $\mathbf {I}$ is the identity matrix. Then the restoring force has the same strength in every direction.
 
 Similar to Eq. 6, when the system is only slightly displaced from equilibrium, we expand $V$ using a Taylor series:
 
@@ -310,7 +313,14 @@ V(\Delta \mathbf{r}^0)
 
 $$
 
-where $\mathbf{H}$ is the Hessian matrix of second derivatives of the potential evaluated at $\Delta \mathbf{r}^0$. Since $\Delta \mathbf{r}^0$ is the equilibrium separation vector, the first derivative vanishes $\nabla_{\Delta \mathbf{r}} V|_{\Delta \mathbf{r}=\Delta \mathbf{r}^0} = \mathbf{0}$. If we also choose the zero of potential energy so that $V(\Delta \mathbf{r}^0)=0$, then the expansion reduces to
+where $\mathbf{H}$ is the Hessian matrix of second derivatives of the potential evaluated at $\Delta \mathbf{r}^0$. Since $\Delta \mathbf{r}^0$ is the equilibrium separation vector, the first derivative vanishes:
+
+$$
+\left.\nabla_{\Delta \mathbf{r}} V\right|_{\Delta \mathbf{r}=\Delta \mathbf{r}^0} = \mathbf{0}.
+
+$$
+
+If we also choose the zero of potential energy so that $V(\Delta \mathbf{r}^0)=0$, then the expansion reduces to
 
 $$
 V(\Delta \mathbf{r})
@@ -333,21 +343,27 @@ $$
 How can we calculate the force, now?
 
 $$
-\mathbf{F} = 
--\nabla_{\Delta \mathbf{r}} V(\Delta \mathbf{r}) =
--\nabla_{\Delta \mathbf{r}} (\frac{1}{2} \Delta \mathbf{r}^T \mathbf{H} \Delta \mathbf{r}) =
-- \mathbf{H} \Delta \mathbf{r} \tag{28}
+\begin{aligned}
+\mathbf{F}
+&= -\nabla_{\Delta \mathbf{r}} V(\Delta \mathbf{r}) \\
+&= -\nabla_{\Delta \mathbf{r}} \left(\frac{1}{2} \Delta \mathbf{r}^T \mathbf{H} \Delta \mathbf{r}\right) \\
+&= -\mathbf{H} \Delta \mathbf{r}
+\end{aligned} \tag{28}
 
 $$
 
 We now combine Eq. 26 with Newton's second law. For the relative coordinate, the equation of motion becomes
 
 $$
-\mathbf{F} = m \frac{d^2 \Delta \mathbf{r}}{dt^2} = - \mathbf{H} \Delta \mathbf{r} \Leftrightarrow m \frac{d^2 \Delta \mathbf{r}}{dt^2} + \mathbf{H} \Delta \mathbf{r} = \mathbf{0}. \tag{29}
+\mathbf{F} = 
+m \frac{d^2 \Delta \mathbf{r}}{dt^2} = 
+- \mathbf{H} \Delta \mathbf{r}
+\Leftrightarrow m \frac{d^2 \Delta \mathbf{r}}{dt^2} + \mathbf{H} \Delta \mathbf{r} = \mathbf{0}
+\tag{29}
 
 $$
 
-## Thermal fluctation in 2D
+## Thermal Fluctuation in 2D
 
 Let us define the displacement from equilibrium as $\mathbf{x} = \Delta \mathbf{r} - \Delta \mathbf{r}^0$. Using Eq. 24, the harmonic potential can be written as
 
@@ -359,13 +375,14 @@ $$
 At thermal equilibrium, the probability density of the displacement vector is given by the Boltzmann distribution:
 
 $$
-P(\mathbf{x}) = \frac{1}{Z}\exp\!\left(-\frac{V(\mathbf{x})}{k_B T}\right)
-=
-\frac{1}{Z}\exp\!\left(-\frac{1}{2k_B T}\mathbf{x}^T \mathbf{H} \mathbf{x}\right) \tag{31}
+\begin{aligned}
+P(\mathbf{x}) &= \frac{1}{Z}\exp\!\left(-\frac{V(\mathbf{x})}{k_B T}\right) \\
+&= \frac{1}{Z}\exp\!\left(-\frac{1}{2k_B T}\mathbf{x}^T \mathbf{H} \mathbf{x}\right)
+\end{aligned} \tag{31}
 
 $$
 
-, where the partition function is $Z=\int \exp(-\frac{1}{2k_B T}\mathbf{x}^T \mathbf{H} \mathbf{x})\,d\mathbf{x}$. To describe the size of the fluctuation, we consider the covariance matrix
+where the partition function is $Z=\int \exp\!\left(-\frac{1}{2k_B T}\mathbf{x}^T \mathbf{H} \mathbf{x}\right)\,d\mathbf{x}$. To describe the size of the fluctuation, we consider the covariance matrix
 
 $$
 \langle \mathbf{x}\mathbf{x}^T \rangle =
@@ -441,20 +458,18 @@ $$
 Using Euler's formula, we can rewrite the general real-valued solution as
 
 $$
-\Delta \mathbf{r}(t)
-=
+\Delta \mathbf{r}(t) =
 a_1 \mathbf{u}_1 \cos(\omega_1 t)
 + b_1 \mathbf{u}_1 \sin(\omega_1 t)
 + a_2 \mathbf{u}_2 \cos(\omega_2 t)
-+ b_2 \mathbf{u}_2 \sin(\omega_2 t)
-=
++ b_2 \mathbf{u}_2 \sin(\omega_2 t) \\
+\Delta \mathbf{r}(t) =
 \sum_{i=1}^{2}
-\mathbf{u}_i \left[ a_i \cos(\omega_i t) + b_i \sin(\omega_i t) \right]
-, \tag{39}
+\mathbf{u}_i \left[ a_i \cos(\omega_i t) + b_i \sin(\omega_i t) \right] \tag{39}
 
 $$
 
-where $a_1$, $b_1$, $a_2$, and $b_2$ are constants determined by the initial conditions.
+, where $a_1$, $b_1$, $a_2$, and $b_2$ are constants determined by the initial conditions.
 
 In this form, the meaning becomes clearer. The total motion is the sum of two independent oscillations, one along the direction of $\mathbf{u}_1$ and the other along the direction of $\mathbf{u}_2$.
 
@@ -470,16 +485,15 @@ Therefore, although the motion may look complicated in the original $x$-$y$ coor
 We now generalize the discussion from a two-particle system to an $n$-particle system in three dimensions. A convenient picture is a mass-spring network, where each particle is represented by a node and each interaction is represented by a spring.
 
 <p align="center">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/5/58/MassSpringNetwork.jpg" alt="Mass-spring network model" width="900">
+  <img src="https://upload.wikimedia.org/wikipedia/en/e/e7/MassSpringNetwork.jpg" alt="Mass-spring network model" width="800">
 </p>
 
-*Figure source:* [Wikipedia: Gaussian network model, MassSpringNetwork.jpg](https://en.wikipedia.org/wiki/Gaussian_network_model#/media/File:MassSpringNetwork.jpg)
+*Figure source:* [Wikipedia: Gaussian network model](https://en.wikipedia.org/wiki/Gaussian_network_model#/media/File:MassSpringNetwork.jpg)
 
 In this model, particle $i$ has position vector $\mathbf{R}_i = \begin{pmatrix} x_i \\ y_i \\ z_i \end{pmatrix}$, and equilibrium position vector $\mathbf{R}_i^0 = \begin{pmatrix} x_i^0 \\ y_i^0 \\ z_i^0 \end{pmatrix}$. Its displacement from equilibrium is
 
 $$
 \Delta \mathbf{R}_i = \mathbf{R}_i - \mathbf{R}_i^0. \tag{40}
-
 $$
 
 For the whole system, the instantaneous position vectors, equilibrium position vectors, and displacement vectors are
@@ -508,10 +522,7 @@ $$
 \vdots \\
 \Delta \mathbf{R}_n
 \end{pmatrix}. \tag{41}
-
 $$
-
-The relation between these quantities is shown in the figure: $\mathbf{R}_i^0$ and $\mathbf{R}_j^0$ are the equilibrium position vectors, $\Delta \mathbf{R}_i$ and $\Delta \mathbf{R}_j$ are the displacements from equilibrium, and $\mathbf{R}_{ij}^0$ is the equilibrium separation vector between particles $i$ and $j$.
 
 For the whole system, we define:
 
@@ -521,13 +532,12 @@ For the whole system, we define:
 - $\Delta \mathbf{R}_i = \mathbf{R}_i - \mathbf{R}_i^0$ is the displacement vector of particle $i$ from equilibrium.
 - $\mathbf{R}_{ij} = \mathbf{R}_j - \mathbf{R}_i$ is the instantaneous separation vector between particles $i$ and $j$.
 - $\mathbf{R}_{ij}^0 = \mathbf{R}_j^0 - \mathbf{R}_i^0$ is the equilibrium separation vector between particles $i$ and $j$.
-- $\mathbf{R}_{ij}-\mathbf{R}_{ij}^0 = (\mathbf{R}_j - \mathbf{R}_i) - (\mathbf{R}_j^0 - \mathbf{R}_i^0)=\Delta \mathbf{R}_j $
 
 The change in separation vector from equilibrium is
-
 $$
-\Delta \mathbf{R}_{ij}=\mathbf{R}_{ij}-\mathbf{R}_{ij}^0 = (\mathbf{R}_j - \mathbf{R}_i) - (\mathbf{R}_j^0 - \mathbf{R}_i^0)=\Delta \mathbf{R}_j - \Delta \mathbf{R}_i
-
+\Delta \mathbf{R}_{ij}=\mathbf{R}_{ij}-\mathbf{R}_{ij}^0  = 
+(\mathbf{R}_j - \mathbf{R}_i) - (\mathbf{R}_j^0 - \mathbf{R}_i^0) =  
+\Delta \mathbf{R}_j - \Delta \mathbf{R}_i
 $$
 
 It means that the change in separation vector is just the difference of the two particle displacement vectors. For one interacting pair $(i,j)$, the harmonic potential energy is
@@ -542,10 +552,9 @@ V_{ij} \approx \frac{1}{2}
 \left(\Delta \mathbf{R}_{j} - \Delta \mathbf{R}_{i} \right)^T
 \mathbf{H}_{ij}
 \left(\Delta \mathbf{R}_{j} - \Delta \mathbf{R}_{i} \right) \tag{42}
-
 $$
 
-, where $\mathbf{H}_{ij}$ is the $3\times 3$ Hessian matrix for the interaction between particles $i$ and $j$, evaluated at the equilibrium separation vector $\mathbf{R}_{ij}^0$
+Here, $\mathbf{H}_{ij}$ is the 3x3 Hessian matrix for the interaction between particles $i$ and $j$, evaluated at $\mathbf{R}_{ij}^0$:
 
 $$
 \mathbf{H}_{ij}
@@ -561,7 +570,6 @@ $$
 \frac{\partial^2 V_{ij}}
 {\partial \mathbf{R}_{ij}\,\partial \mathbf{R}_{ij}^T}
 \right|_{\mathbf{R}_{ij}=\mathbf{R}_{ij}^0}
-
 $$
 
 As a concrete example, consider a tri-peptide-like system with three particles, labeled $1$, $2$, and $3$, as shown below. Suppose that particles $1$ and $2$ are in contact, particles $2$ and $3$ are in contact, but particles $1$ and $3$ are not in contact for the chosen cutoff distance $R_c$.
@@ -778,10 +786,8 @@ $$
 This isotropic, uniform-spring approximation is the key simplification behind the Gaussian network model (GNM).
 
 The force acting on particle $i$ is obtained from the total potential by
-
 $$
 \mathbf{F}_i = -\nabla_{\mathbf{R}_i} V_{\text{total}}. \tag{57}
-
 $$
 
 Applying Newton's second law to every particle gives a set of $n$ coupled vector equations:
@@ -793,7 +799,6 @@ m_i \frac{d^2 \mathbf{R}_i}{dt^2}
 =
 -\nabla_{\mathbf{R}_i} V_{\text{total}},
 \qquad i=1,\dots,n. \tag{58}
-
 $$
 
 Collecting all particle displacements into the stacked vector $\Delta \mathbf{R}$, the linearized equation of motion near equilibrium can be written compactly as

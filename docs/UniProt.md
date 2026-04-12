@@ -68,8 +68,6 @@ class UniprotRecord(object):
             "taxonomy_id": organism.get("taxonId"),
             "lineage": organism.get("lineage", []),
         }
-
-
 ```
 
 # Combine fetching and parsing functions
@@ -111,3 +109,8 @@ record.getOrganism()
   'Homo']}
 ```
 
+# Exercise
+
+Given a UniProt ID, please do as follow
+1. Collect all PDB IDs
+2. Write a function to rank PDB IDs based on coverage, resolution, and alphabet. 

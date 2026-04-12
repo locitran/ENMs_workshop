@@ -108,23 +108,20 @@ class UniprotRecord(object):
         """Return UniProt PDB cross-references parsed from the REST payload."""
         return self._pdbdata
 
-    def getAccession(self, index=0):
-        """Return the primary accession or one secondary accession."""
-        if index == 0:
-            return self._rawdata.get("primaryAccession")
-        items = self._rawdata.get("secondaryAccessions", [])
-        return items[index - 1] if index - 1 < len(items) else None
+    def getAccession(self):
+        """Return the primary UniProt accession."""
+        return self._rawdata.get("primaryAccession")
 
-    def getName(self, index=0):
+    def getSecondaryAccessions(self):
+        """Return the list of secondary UniProt accessions."""
+        return self._rawdata.get("secondaryAccessions", [])
+
+    def getName(self):
         """Return the UniProtKB entry name, such as HLAA_HUMAN."""
-        if index != 0:
-            return None
         return self._rawdata.get("uniProtkbId")
 
-    def getProtein(self, index=0):
+    def getProtein(self):
         """Parse recommended and alternative protein names."""
-        if index != 0:
-            return None
         desc = self._rawdata.get("proteinDescription", {})
         recommended = (
             desc.get("recommendedName", {})
@@ -145,17 +142,27 @@ class UniprotRecord(object):
             "alter_shortname": alt_short,
         }
 
-    def getGene(self, index=0):
+    def getGene(self):
         """Parse the primary gene name from the genes block."""
         genes = self._rawdata.get("genes", [])
-        if index >= len(genes):
+        if not genes:
             return None
-        return genes[index].get("geneName", {}).get("value")
+        return genes[0].get("geneName", {}).get("value")
 
-    def getOrganism(self, index=0):
+    def getGenes(self):
+        """Return all parsed gene names and synonyms."""
+        genes_out = []
+        for gene in self._rawdata.get("genes", []):
+            genes_out.append(
+                {
+                    "gene_name": (gene.get("geneName") or {}).get("value"),
+                    "synonyms": [item.get("value") for item in gene.get("synonyms", []) if item.get("value")],
+                }
+            )
+        return genes_out
+
+    def getOrganism(self):
         """Parse organism names, taxonomy id, and lineage."""
-        if index != 0:
-            return None
         organism = self._rawdata.get("organism", {})
         return {
             "scientific_name": organism.get("scientificName"),
@@ -164,10 +171,8 @@ class UniprotRecord(object):
             "lineage": organism.get("lineage", []),
         }
 
-    def getSequence(self, index=0):
+    def getSequence(self):
         """Return the amino-acid sequence string."""
-        if index != 0:
-            return None
         return (self._rawdata.get("sequence") or {}).get("value")
 
     def getCellLocation(self):
@@ -232,14 +237,14 @@ class UniprotRecord(object):
         name = self.getName()
         return f"{uid} ({name})"
 
-    def getEntry(self, item, index=0):
+    def getEntry(self, item):
         """Backward-compatible accessor for a few common UniProt fields."""
         if item == "accession":
-            return self.getAccession(index)
+            return self.getAccession()
         if item == "name":
-            return self.getName(index)
+            return self.getName()
         if item == "sequence":
-            return self.getSequence(index)
+            return self.getSequence()
         return self._rawdata.get(item)
 
     def getKeywords(self):

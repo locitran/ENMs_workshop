@@ -207,6 +207,12 @@ td {
   box-shadow: var(--shadow);
 }
 
+.page-content p,
+.page-content li,
+.page-content blockquote {
+  overflow-wrap: break-word;
+}
+
 .page-content h1,
 .page-content h2,
 .page-content h3 {
@@ -269,7 +275,24 @@ td {
 }
 
 .page-content mjx-container {
-  font-size: 1.8em !important;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  font-size: 1.12em !important;
+}
+
+.page-content mjx-container[display="true"] {
+  display: block;
+  margin: 0.4rem 0;
+}
+
+.page-content mjx-container[jax="SVG"] > svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.page-content li mjx-container {
+  font-size: 1em !important;
 }
 
 details {
