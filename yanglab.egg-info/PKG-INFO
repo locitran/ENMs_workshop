@@ -1,3 +1,24 @@
+Metadata-Version: 2.4
+Name: yanglab
+Version: 0.1.0
+Summary: Yang Lab helpers for ENMs workshop and structure-bioinformatics workflows.
+Author: Yang Lab
+License: MIT
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: biopython==1.79
+Requires-Dist: numpy==1.23.5
+Requires-Dist: pandas==2.2.3
+Requires-Dist: ProDy==2.4.1
+Requires-Dist: requests==2.32.4
+Requires-Dist: rcsb-api<2.0.0,>=1.6.0
+Requires-Dist: scipy==1.13.0
+Provides-Extra: workshop
+Requires-Dist: matplotlib==3.10.0; extra == "workshop"
+Requires-Dist: notebook==7.3.2; extra == "workshop"
+Requires-Dist: scikit-learn==1.6.1; extra == "workshop"
+Requires-Dist: seaborn==0.13.2; extra == "workshop"
+
 # ENMs Workshop
 
 This workshop includes the Week 1 lesson on `ENMs` and `py-rcsb-api`.
@@ -74,32 +95,6 @@ conda activate enm_workshop
 After that, install the package requirements:
 ```bash
 pip install -r requirements.txt
-```
-
-## Install `yanglab` As A Package
-
-The `yanglab` code under `ENMs_workshop/yanglab` can now be installed as a
-local Python package because this project includes a
-[`pyproject.toml`](/mnt/nas_1/YangLab/project/ENMs_workshop/pyproject.toml).
-
-From the `ENMs_workshop` directory:
-
-```bash
-cd ENMs_workshop
-pip install -e . --no-build-isolation
-```
-
-If you also want the notebook and plotting dependencies used in the workshop:
-
-```bash
-pip install -e ".[workshop]" --no-build-isolation
-```
-
-You can then import the package with:
-
-```python
-import yanglab
-print(yanglab.__version__)
 ```
 
 ## Test

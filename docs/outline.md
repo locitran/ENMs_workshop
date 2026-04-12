@@ -76,3 +76,4 @@ Potential topics:
 - Structure superimposition
 - Deep Neural Network (DNN) models
 - UniProt API
+- Docker/Singularity
