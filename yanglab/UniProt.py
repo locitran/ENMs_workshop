@@ -19,65 +19,6 @@ REST_UNIPROT = "https://rest.uniprot.org/uniprotkb/{}"
 
 comma_splitter = re.compile(r"\s*,\s*").split
 
-
-def _comment_type(comment):
-    """Return normalized UniProt comment type, for example SUBUNIT or PTM."""
-    return (comment or {}).get("commentType", "").strip().upper()
-
-
-def _feature_type(feature):
-    """Return normalized UniProt feature type in lowercase."""
-    return (feature or {}).get("type", "").strip().lower()
-
-
-def _text_values(block):
-    """Extract plain text strings from a comment block."""
-    texts = []
-    for item in (block or {}).get("texts", []):
-        value = item.get("value")
-        if value:
-            texts.append(value.strip())
-    return texts
-
-
-def _start_end(location):
-    """Extract start and end coordinates from a UniProt location block."""
-    location = location or {}
-    start = (location.get("start") or {}).get("value")
-    end = (location.get("end") or {}).get("value")
-    return start, end
-
-
-def _position_or_range(location):
-    """Convert a location block into a single position or begin-end range."""
-    start, end = _start_end(location)
-    if start is None and end is None:
-        return None
-    if start == end:
-        return start
-    return f"{start}-{end}"
-
-
-def _xref_properties(xref):
-    """Convert cross-reference property list into a simple dictionary."""
-    out = {}
-    for item in (xref or {}).get("properties", []):
-        key = item.get("key")
-        value = item.get("value")
-        if key:
-            out[key] = value
-    return out
-
-
-def _xrefs(raw, database):
-    """Return all cross-references for one database, such as PDB or AlphaFoldDB."""
-    return [
-        x
-        for x in raw.get("uniProtKBCrossReferences", [])
-        if isinstance(x, dict) and x.get("database") == database
-    ]
-
-
 class UniprotRecord(object):
     """Wrap one UniProt REST record and expose parsed biological annotations."""
 
@@ -95,10 +36,6 @@ class UniprotRecord(object):
     def getAPIURL(self):
         """Return the REST API URL for the current UniProt accession."""
         return REST_UNIPROT.format(self.getAccession())
-
-    def getXML(self):
-        """Legacy compatibility helper returning the REST URL instead of XML."""
-        return self.getAPIURL()
 
     def getData(self):
         """Return the raw UniProt REST JSON dictionary."""
@@ -201,7 +138,7 @@ class UniprotRecord(object):
 
     def getAlphaFold(self):
         """Return the AlphaFoldDB accession cross-reference, if present."""
-        hits = _xrefs(self._rawdata, "AlphaFoldDB")
+        hits = self._xrefs("AlphaFoldDB")
         return hits[0].get("id") if hits else None
 
     def getCofactor(self):
@@ -267,13 +204,56 @@ class UniprotRecord(object):
         """Return cross-references grouped by source database."""
         return self._cross_references
 
+    def _text_values(self, block):
+        """Extract plain text values from a UniProt comment block."""
+        texts = []
+        for item in (block or {}).get("texts", []):
+            value = item.get("value")
+            if value:
+                texts.append(value.strip())
+        return texts
+
+    def _start_end(self, location):
+        """Extract start and end coordinates from a UniProt location block."""
+        location = location or {}
+        start = (location.get("start") or {}).get("value")
+        end = (location.get("end") or {}).get("value")
+        return start, end
+
+    def _position_or_range(self, location):
+        """Convert a location block into a single position or begin-end range."""
+        start, end = self._start_end(location)
+        if start is None and end is None:
+            return None
+        if start == end:
+            return start
+        return f"{start}-{end}"
+
+    def _xref_properties(self, xref):
+        """Convert cross-reference property list into a simple dictionary."""
+        out = {}
+        for item in (xref or {}).get("properties", []):
+            key = item.get("key")
+            value = item.get("value")
+            if key:
+                out[key] = value
+        return out
+
+    def _xrefs(self, database):
+        """Return all cross-references for one database, such as PDB or AlphaFoldDB."""
+        return [
+            x
+            for x in self._rawdata.get("uniProtKBCrossReferences", [])
+            if isinstance(x, dict) and x.get("database") == database
+        ]
+
     def _parseDNAbinding(self):
         """Parse DNA-binding region features from the features block."""
         dna_binding = []
         for feature in self._rawdata.get("features", []):
-            if _feature_type(feature) != "dna binding":
+            if (feature.get("type") or "").strip().lower() != "dna binding":
                 continue
-            start, end = _start_end(feature.get("location"))
+            start, end = self._start_end(feature.get("location"))
             dna_binding.append(
                 {
                     "description": feature.get("description"),
@@ -287,9 +267,9 @@ class UniprotRecord(object):
         """Parse zinc-finger features from the features block."""
         zinc_finger = []
         for feature in self._rawdata.get("features", []):
-            if _feature_type(feature) != "zinc finger":
+            if (feature.get("type") or "").strip().lower() != "zinc finger":
                 continue
-            start, end = _start_end(feature.get("location"))
+            start, end = self._start_end(feature.get("location"))
             zinc_finger.append(
                 {
                     "description": feature.get("description"),
@@ -303,12 +283,12 @@ class UniprotRecord(object):
         """Parse active-site features from the features block."""
         active_site = []
         for feature in self._rawdata.get("features", []):
-            if _feature_type(feature) != "active site":
+            if (feature.get("type") or "").strip().lower() != "active site":
                 continue
             active_site.append(
                 {
                     "description": feature.get("description"),
-                    "position": _position_or_range(feature.get("location")),
+                    "position": self._position_or_range(feature.get("location")),
                 }
             )
         self._active_site = active_site
@@ -317,7 +297,7 @@ class UniprotRecord(object):
         """Parse binding-site features and associated ligand annotations."""
         binding_site = []
         for feature in self._rawdata.get("features", []):
-            if _feature_type(feature) != "binding site":
+            if (feature.get("type") or "").strip().lower() != "binding site":
                 continue
             chebi = None
             for ref in feature.get("featureCrossReferences", []):
@@ -327,7 +307,7 @@ class UniprotRecord(object):
             ligand = feature.get("ligand") or {}
             binding_site.append(
                 {
-                    "position": _position_or_range(feature.get("location")),
+                    "position": self._position_or_range(feature.get("location")),
                     "description": feature.get("description"),
                     "name": ligand.get("name"),
                     "chebi": chebi or ligand.get("id"),
@@ -339,11 +319,11 @@ class UniprotRecord(object):
         """Parse generic site features from the features block."""
         site = []
         for feature in self._rawdata.get("features", []):
-            if _feature_type(feature) != "site":
+            if (feature.get("type") or "").strip().lower() != "site":
                 continue
             site.append(
                 {
-                    "position": _position_or_range(feature.get("location")),
+                    "position": self._position_or_range(feature.get("location")),
                     "description": feature.get("description"),
                 }
             )
@@ -353,7 +333,7 @@ class UniprotRecord(object):
         """Parse cofactors from UniProt COFACTOR comments."""
         cofactors = []
         for comment in self._rawdata.get("comments", []):
-            if _comment_type(comment) != "COFACTOR":
+            if (comment.get("commentType") or "").strip().upper() != "COFACTOR":
                 continue
             for item in comment.get("cofactors", []):
                 chebi = None
@@ -372,14 +352,14 @@ class UniprotRecord(object):
         """Parse membrane regions and subcellular-location comments."""
         cell_location = []
         for feature in self._rawdata.get("features", []):
-            ftype = _feature_type(feature)
+            ftype = (feature.get("type") or "").strip().lower()
             if ftype not in (
                 "topological domain",
                 "transmembrane",
                 "intramembrane",
             ):
                 continue
-            start, end = _start_end(feature.get("location"))
+            start, end = self._start_end(feature.get("location"))
             cell_location.append(
                 {
                     "type": feature.get("type"),
@@ -389,7 +369,7 @@ class UniprotRecord(object):
                 }
             )
         for comment in self._rawdata.get("comments", []):
-            if _comment_type(comment) != "SUBCELLULAR LOCATION":
+            if (comment.get("commentType") or "").strip().upper() != "SUBCELLULAR LOCATION":
                 continue
             for item in comment.get("subcellularLocations", []):
                 location = (item.get("location") or {}).get("value")
@@ -421,9 +401,9 @@ class UniprotRecord(object):
             "lipidation",
         }
         for feature in self._rawdata.get("features", []):
-            if _feature_type(feature) not in feature_types:
+            if (feature.get("type") or "").strip().lower() not in feature_types:
                 continue
-            start, end = _start_end(feature.get("location"))
+            start, end = self._start_end(feature.get("location"))
             if start == end:
                 ptms.append(
                     {
@@ -442,9 +422,9 @@ class UniprotRecord(object):
                     }
                 )
         for comment in self._rawdata.get("comments", []):
-            if _comment_type(comment) != "PTM":
+            if (comment.get("commentType") or "").strip().upper() != "PTM":
                 continue
-            for text in _text_values(comment):
+            for text in self._text_values(comment):
                 ptms.append(
                     {
                         "type": "PTM comment",
@@ -456,8 +436,8 @@ class UniprotRecord(object):
     def _parseComplexPortals(self):
         """Parse ComplexPortal cross-references from the xref list."""
         portals = []
-        for xref in _xrefs(self._rawdata, "ComplexPortal"):
-            props = _xref_properties(xref)
+        for xref in self._xrefs("ComplexPortal"):
+            props = self._xref_properties(xref)
             portals.append(
                 {
                     "id": xref.get("id"),
@@ -470,9 +450,9 @@ class UniprotRecord(object):
         """Parse SUBUNIT comments and split microbial from non-microbial text."""
         subunit_all = []
         for comment in self._rawdata.get("comments", []):
-            if _comment_type(comment) != "SUBUNIT":
+            if (comment.get("commentType") or "").strip().upper() != "SUBUNIT":
                 continue
-            subunit_all.extend(_text_values(comment))
+            subunit_all.extend(self._text_values(comment))
         microbial = [t for t in subunit_all if "(Microbial infection)" in t]
         non_micro = [t for t in subunit_all if "(Microbial infection)" not in t]
         self._subunit_comments = {
@@ -492,9 +472,9 @@ class UniprotRecord(object):
             "repeat",
         }
         for feature in self._rawdata.get("features", []):
-            if _feature_type(feature) not in feature_types:
+            if (feature.get("type") or "").strip().lower() not in feature_types:
                 continue
-            start, end = _start_end(feature.get("location"))
+            start, end = self._start_end(feature.get("location"))
             family_domains.append(
                 {
                     "type": feature.get("type"),
@@ -510,7 +490,7 @@ class UniprotRecord(object):
         interactions = []
         self_acc = self.getAccession()
         for comment in self._rawdata.get("comments", []):
-            if _comment_type(comment) != "INTERACTION":
+            if (comment.get("commentType") or "").strip().upper() != "INTERACTION":
                 continue
             for item in comment.get("interactions", []):
                 one = item.get("interactantOne") or {}
@@ -533,9 +513,9 @@ class UniprotRecord(object):
     def _parsePDBfromUniProt(self):
         """Parse PDB cross-references reported directly by UniProt."""
         pdbdata = {}
-        for xref in _xrefs(self._rawdata, "PDB"):
+        for xref in self._xrefs("PDB"):
             pdbid = xref.get("id")
-            props = _xref_properties(xref)
+            props = self._xref_properties(xref)
             method = props.get("Method")
             resolution = props.get("Resolution", "1.00 A")
             try:
@@ -634,7 +614,6 @@ class UniprotRecord(object):
         self._parseSubunit()
         LOGGER.report("Parsing in %.1fs.", "_parse")
 
-
 def queryUniprot(accession, timeout=20):
     """Fetch one UniProtKB REST record as a raw JSON dictionary."""
     if not isinstance(accession, str):
@@ -652,7 +631,6 @@ def queryUniprot(accession, timeout=20):
     except requests.RequestException as exc:
         raise ValueError(f"No UniProt record found for accession {accession}") from exc
     return response.json()
-
 
 def searchUniprot(accession, timeout=20, n_attempts=3, dt=1):
     """Fetch one UniProt record and wrap it as a :class:`UniprotRecord`."""

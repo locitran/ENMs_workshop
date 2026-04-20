@@ -112,5 +112,6 @@ record.getOrganism()
 # Exercise
 
 Given a UniProt ID, please do as follow
-1. Collect all PDB IDs
-2. Write a function to rank PDB IDs based on coverage, resolution, and alphabet. 
+1. Collect all PDB IDs from using both UniProt API and RCSB API
+2. Find canonical sequence, including isoform id and protein sequence
+3. Write a function to rank PDB IDs based on coverage, resolution, and alphabet
