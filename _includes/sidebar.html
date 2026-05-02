@@ -16,9 +16,15 @@
     <a href="{{ '/harmonic-potential-energy/' | relative_url }}" {% if page.url == '/harmonic-potential-energy/' %}aria-current="page"{% endif %}>Harmonic potential energy</a>
     <a href="{{ '/uniprot/' | relative_url }}" {% if page.url == '/uniprot/' %}aria-current="page"{% endif %}>UniProt Parser</a>
     <a href="{{ '/learning-notebooks/' | relative_url }}" {% if page.url == '/learning-notebooks/' %}aria-current="page"{% endif %}>Notebooks</a>
-    <a href="{{ '/notebooks-html/uniprot.html' | relative_url }}">Notebook: UniProt</a>
     <a href="{{ '/yanglab-api/' | relative_url }}" {% if page.url == '/yanglab-api/' %}aria-current="page"{% endif %}>yanglab API</a>
-    
+
+    {% assign notebook_pages = site.static_files | where_exp: "item", "item.path contains '/notebooks-html/' and item.extname == '.html'" | sort: "name" %}
+    {% if notebook_pages.size > 0 %}
+      {% for item in notebook_pages %}
+        {% assign notebook_name = item.name | remove: '.html' | replace: '-', ' ' | replace: '_', ' ' %}
+        <a href="{{ item.path | relative_url }}" {% if page.url == item.path %}aria-current="page"{% endif %}>Notebook: {{ notebook_name }}</a>
+      {% endfor %}
+    {% endif %}
   </nav>
 
   <div class="sidebar-note">
