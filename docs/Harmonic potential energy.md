@@ -494,6 +494,7 @@ In this model, particle $i$ has position vector $\mathbf{R}_i = \begin{pmatrix} 
 
 $$
 \Delta \mathbf{R}_i = \mathbf{R}_i - \mathbf{R}_i^0. \tag{40}
+
 $$
 
 For the whole system, the instantaneous position vectors, equilibrium position vectors, and displacement vectors are
@@ -522,6 +523,7 @@ $$
 \vdots \\
 \Delta \mathbf{R}_n
 \end{pmatrix}. \tag{41}
+
 $$
 
 For the whole system, we define:
@@ -534,10 +536,12 @@ For the whole system, we define:
 - $\mathbf{R}_{ij}^0 = \mathbf{R}_j^0 - \mathbf{R}_i^0$ is the equilibrium separation vector between particles $i$ and $j$.
 
 The change in separation vector from equilibrium is
+
 $$
 \Delta \mathbf{R}_{ij}=\mathbf{R}_{ij}-\mathbf{R}_{ij}^0  = 
 (\mathbf{R}_j - \mathbf{R}_i) - (\mathbf{R}_j^0 - \mathbf{R}_i^0) =  
 \Delta \mathbf{R}_j - \Delta \mathbf{R}_i
+
 $$
 
 It means that the change in separation vector is just the difference of the two particle displacement vectors. For one interacting pair $(i,j)$, the harmonic potential energy is
@@ -552,6 +556,7 @@ V_{ij} \approx \frac{1}{2}
 \left(\Delta \mathbf{R}_{j} - \Delta \mathbf{R}_{i} \right)^T
 \mathbf{H}_{ij}
 \left(\Delta \mathbf{R}_{j} - \Delta \mathbf{R}_{i} \right) \tag{42}
+
 $$
 
 Here, $\mathbf{H}_{ij}$ is the 3x3 Hessian matrix for the interaction between particles $i$ and $j$, evaluated at $\mathbf{R}_{ij}^0$:
@@ -570,6 +575,7 @@ $$
 \frac{\partial^2 V_{ij}}
 {\partial \mathbf{R}_{ij}\,\partial \mathbf{R}_{ij}^T}
 \right|_{\mathbf{R}_{ij}=\mathbf{R}_{ij}^0}
+
 $$
 
 As a concrete example, consider a tri-peptide-like system with three particles, labeled $1$, $2$, and $3$, as shown below. Suppose that particles $1$ and $2$ are in contact, particles $2$ and $3$ are in contact, but particles $1$ and $3$ are not in contact for the chosen cutoff distance $R_c$.
@@ -665,6 +671,9 @@ $$
 \end{pmatrix}. \tag{49}
 
 $$
+
+- The diagonal blocks have positive sign, each block collects the contributions from all neighbors connected to that particle.
+- The off-diagonal block index $i$ and $j$ is negative, $-\mathbf{H}_{ij}$, if they are in contact; otherwise, it is $\mathbf{0}$.
 
 > Prove equation 48 and equation 49?
 
@@ -786,8 +795,10 @@ $$
 This isotropic, uniform-spring approximation is the key simplification behind the Gaussian network model (GNM).
 
 The force acting on particle $i$ is obtained from the total potential by
+
 $$
 \mathbf{F}_i = -\nabla_{\mathbf{R}_i} V_{\text{total}}. \tag{57}
+
 $$
 
 Applying Newton's second law to every particle gives a set of $n$ coupled vector equations:
@@ -799,6 +810,7 @@ m_i \frac{d^2 \mathbf{R}_i}{dt^2}
 =
 -\nabla_{\mathbf{R}_i} V_{\text{total}},
 \qquad i=1,\dots,n. \tag{58}
+
 $$
 
 Collecting all particle displacements into the stacked vector $\Delta \mathbf{R}$, the linearized equation of motion near equilibrium can be written compactly as
@@ -875,3 +887,272 @@ This expression has exactly the same structure as the 2D two-particle case, exce
 In practice, some of these modes correspond to rigid-body translations and rotations, which do not deform the structure and therefore have zero or near-zero frequency. The remaining nonzero-frequency modes describe the internal vibrations of the network and are the main objects of interest in elastic network models.
 
 In the language of GNM, we usually do not follow the full time-dependent vector solution in Eq. 60. Instead, we use the isotropic network assumption to study fluctuation amplitudes and correlations from the inverse of the Kirchhoff matrix $\Gamma$. Thus, Eq. 60 is best viewed as the more detailed directional analogue, while GNM keeps the same network idea but focuses on scalar fluctuation statistics rather than explicit vector-valued motion.
+
+## Example: Normal Mode Analysis from an MD Trajectory
+
+So far, our discussion of harmonic motion started from a potential energy function and then derived the Hessian matrix, normal modes, and thermal fluctuations. In practice, we may also start from an **MD trajectory** and estimate the dominant collective motions directly from the observed coordinate fluctuations.
+
+For the current workshop, we will use:
+
+- `data/md_NPT.rst` as the reference coordinate set
+- `data/md_NPT.dcd` as the MD trajectory
+
+Here the restart file provides one coordinate set, while the DCD file provides a time series of atomic coordinates. This is a good example to remind students that a trajectory tells us how the coordinates change with time, while a single structure or restart file provides one snapshot that can be used as a reference.
+
+### What analysis are we doing?
+
+When we use a trajectory, we usually perform **principal component analysis (PCA)**, **essential dynamics analysis (EDA)**, or **quasi-harmonic analysis**. Mathematically, this is closely related to normal mode analysis because we again diagonalize a matrix and obtain collective modes. However, the matrix is now estimated from the trajectory covariance rather than from an explicit model Hessian.
+
+If we define the displacement vector of the whole system at frame $t$ as
+
+$$
+\Delta \mathbf{R}(t) = \mathbf{R}(t) - \langle \mathbf{R} \rangle, \tag{67}
+
+$$
+
+then the covariance matrix is
+
+$$
+\mathbf{C}
+=
+\left\langle
+\Delta \mathbf{R}(t)\Delta \mathbf{R}(t)^T
+\right\rangle. \tag{68}
+
+$$
+
+Diagonalizing $\mathbf{C}$ gives
+
+$$
+\mathbf{C}\mathbf{u}_k = \lambda_k \mathbf{u}_k, \tag{69}
+
+$$
+
+where $\mathbf{u}_k$ is the $k$th collective mode and $\lambda_k$ is the variance along that mode. Large eigenvalues correspond to soft, highly populated motions.
+
+This is the trajectory analogue of the Hessian-based mode analysis discussed above:
+
+- Hessian-based analysis diagonalizes $\mathbf{H}$
+- trajectory-based analysis diagonalizes the covariance matrix $\mathbf{C}$
+
+In a harmonic approximation, these two viewpoints are closely related because
+
+$$
+\mathbf{C} \propto k_B T\,\mathbf{H}^{-1}. \tag{70}
+
+$$
+
+### Step 1: Read the reference coordinates and trajectory
+
+The current workshop files do not provide rich topology metadata such as atom names or residue names, but they do provide coordinates for all atoms. Therefore, they are still suitable for a trajectory-based mode analysis example.
+
+```python
+import numpy as np
+from scipy.io import netcdf_file
+from prody import DCDFile
+
+with netcdf_file("data/md_NPT.rst", "r", mmap=False) as nc:
+    ref_coords = nc.variables["coordinates"].data.copy().astype(float)
+
+dcd = DCDFile("data/md_NPT.dcd")
+
+print("Number of atoms:", dcd.numAtoms())
+print("Number of frames:", dcd.numFrames())
+print("Reference shape:", ref_coords.shape)
+```
+
+For the current dataset, this gives:
+
+- number of atoms: `85023`
+- number of frames: `1000`
+- reference coordinate shape: `(85023, 3)`
+
+### Step 2: Choose a subset for a classroom demo
+
+Since the system is large, it is convenient in class to first use a reduced subset of atoms. For example, we may take every 100th atom and keep the first 500 selected atoms:
+
+```python
+subset = np.arange(0, ref_coords.shape[0], 100)[:500]
+ref_subset = ref_coords[subset]
+```
+
+This is not meant to be the final scientific protocol. It is simply a practical classroom strategy so that the students can see the complete workflow quickly.
+
+> **Question for students:** Why might we begin with a reduced subset of atoms before analyzing the full trajectory?
+
+### Step 3: Align each trajectory frame to the reference
+
+Before computing fluctuations, we should remove overall translation and rotation. Otherwise, the first principal components may describe rigid-body motion rather than internal collective motion.
+
+```python
+from prody import calcTransformation
+
+ref_centered = ref_subset - ref_subset.mean(axis=0)
+frames = []
+
+for frame_index, frame in enumerate(dcd):
+    if frame_index >= 200:
+        break
+
+    coords = frame.getCoords().astype(float)[subset]
+    coords_centered = coords - coords.mean(axis=0)
+
+    transform = calcTransformation(coords_centered, ref_centered)
+    aligned = transform.apply(coords_centered.copy())
+
+    frames.append(aligned.reshape(-1))
+
+X = np.vstack(frames)
+print("Trajectory matrix shape:", X.shape)
+```
+
+In this example, the matrix `X` has shape `(200, 1500)` because:
+
+- we used `200` frames
+- each frame contains `500` atoms
+- each atom contributes `3` Cartesian coordinates
+
+So each frame is represented by one vector in a `1500`-dimensional coordinate space.
+
+### Step 4: Subtract the mean structure and compute the covariance
+
+Let the mean coordinate vector be
+
+$$
+\bar{\mathbf{R}}
+=
+\frac{1}{M}\sum_{t=1}^{M}\mathbf{R}(t), \tag{71}
+
+$$
+
+where $M$ is the number of frames. Then the centered data matrix is obtained by subtracting the mean:
+
+```python
+X = X - X.mean(axis=0)
+```
+
+The covariance matrix is then
+
+$$
+\mathbf{C}
+=
+\frac{1}{M-1}X^T X. \tag{72}
+
+$$
+
+In practice, we may compute the principal components directly with `scikit-learn`:
+
+```python
+from sklearn.decomposition import PCA
+
+pca = PCA(n_components=5)
+pca.fit(X)
+
+print("Explained variance ratio:", pca.explained_variance_ratio_)
+print("Eigenvalues:", pca.explained_variance_)
+```
+
+For the current reduced example, the first five explained variance ratios are approximately
+
+$$
+\left[
+0.0213,\;
+0.0186,\;
+0.0180,\;
+0.0175,\;
+0.0169
+\right]. \tag{73}
+
+$$
+
+These values tell us how much of the total fluctuation is captured by each principal mode.
+
+### Step 5: Interpret the principal modes
+
+The eigenvectors stored in `pca.components_` are collective modes of motion. The corresponding eigenvalues measure the amplitude of fluctuation along those modes.
+
+```python
+print("Mode matrix shape:", pca.components_.shape)
+
+mode1 = pca.components_[0]
+mode2 = pca.components_[1]
+```
+
+The projection of each frame onto the first few modes can be obtained as
+
+```python
+projections = pca.transform(X)
+
+pc1 = projections[:, 0]
+pc2 = projections[:, 1]
+```
+
+These projections are useful because:
+
+- `PC1` shows the dominant collective coordinate
+- `PC2` shows the second most important collective coordinate
+- plotting `PC1` against `PC2` often reveals conformational substates
+
+### Step 6: Connect the trajectory result back to harmonic motion
+
+In the harmonic picture, the covariance matrix and Hessian are related by Eq. 70. Therefore:
+
+- large covariance means soft motion
+- small covariance means stiff motion
+- the dominant PCA modes correspond to the softest collective motions sampled by the trajectory
+
+This is conceptually similar to normal mode analysis, but the source of the modes is different:
+
+- in ENM, the modes come from an assumed harmonic potential
+- in trajectory PCA, the modes come from sampled fluctuations in the MD simulation
+
+### A compact classroom script
+
+The following script puts the main steps together:
+
+```python
+import numpy as np
+from scipy.io import netcdf_file
+from prody import DCDFile, calcTransformation
+from sklearn.decomposition import PCA
+
+with netcdf_file("data/md_NPT.rst", "r", mmap=False) as nc:
+    ref_coords = nc.variables["coordinates"].data.copy().astype(float)
+
+dcd = DCDFile("data/md_NPT.dcd")
+
+subset = np.arange(0, ref_coords.shape[0], 100)[:500]
+ref_subset = ref_coords[subset]
+ref_centered = ref_subset - ref_subset.mean(axis=0)
+
+frames = []
+for frame_index, frame in enumerate(dcd):
+    if frame_index >= 200:
+        break
+
+    coords = frame.getCoords().astype(float)[subset]
+    coords_centered = coords - coords.mean(axis=0)
+    transform = calcTransformation(coords_centered, ref_centered)
+    aligned = transform.apply(coords_centered.copy())
+    frames.append(aligned.reshape(-1))
+
+X = np.vstack(frames)
+X = X - X.mean(axis=0)
+
+pca = PCA(n_components=5)
+pca.fit(X)
+
+print("Explained variance ratio:", pca.explained_variance_ratio_)
+print("First mode eigenvalue:", pca.explained_variance_[0])
+print("Projection shape:", pca.transform(X).shape)
+```
+
+### Questions for students
+
+> **Question for students:** Why must we align the trajectory before computing the covariance matrix?
+
+> **Question for students:** In Hessian-based normal mode analysis, what does a small eigenvalue mean? In trajectory PCA, what does a large eigenvalue mean?
+
+> **Question for students:** How is trajectory PCA related to the harmonic approximation $\mathbf{C} \propto k_B T\,\mathbf{H}^{-1}$?
+
+This example gives a practical bridge between the theory of harmonic motion and the analysis of real MD simulation data.

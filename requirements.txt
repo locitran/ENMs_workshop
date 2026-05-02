@@ -12,3 +12,5 @@ seaborn==0.13.2
 notebook==7.3.2
 nbconvert>=7.16.6,<8.0.0
 pdoc>=15.0.4,<16.0.0
+MDAnalysis
+Bio
