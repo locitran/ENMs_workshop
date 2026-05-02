@@ -29,6 +29,8 @@ GitHub Pages will render the markdown pages in the repository root automatically
 
 - `docs/Week1-py-rcsb-api.md`: workshop notes for `py-rcsb-api`
 - `docs/Week1-ENMs-Introduction.md`: ENM introduction notes
+- `notebooks/`: source Jupyter notebooks
+- `notebooks-html/`: exported HTML versions of the notebooks
 - `_layouts/`, `_config.yml`, `index.md`, `docs/`: Jekyll site for GitHub Pages
 - `requirements.txt`: Python packages for this workshop
 - `check_setup.py`: simple setup test
@@ -51,6 +53,21 @@ cd ENMs_workshop
 
 ### 3. Run Jupiter notebook in A100
 Refer to this hackMD https://hackmd.io/Y9HZatmrSnqtHcC7X6tc-Q
+
+### 4. Export notebooks to HTML
+To generate HTML versions of all notebooks and store them in `notebooks-html`,
+run:
+
+```bash
+jupyter nbconvert --to html --output-dir=notebooks-html notebooks/*.ipynb
+```
+
+Notes:
+
+- This keeps the source notebooks in `notebooks/`.
+- The exported HTML files are written to `notebooks-html/`.
+- Example: `notebooks/uniprot.ipynb` becomes `notebooks-html/uniprot.html`.
+- If a notebook has saved cell outputs, figures, or tables, they will be included in the HTML export.
 
 
 ## Setup With Conda
